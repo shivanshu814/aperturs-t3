@@ -84,13 +84,28 @@ const AuthShowcase: React.FC = () => {
     undefined, // no input
     { enabled: session?.user !== undefined }
   );
-
+  const { mutateAsync } = api.tweet.scheduleTweets.useMutation();
+  const makeTweet = async () => {
+    await mutateAsync({
+      tweets: [
+        {
+          scheduled_at: "5:48:00 PM",
+          text: "hello from tRPC",
+        },
+        {
+          scheduled_at: "5:49:00 PM",
+          text: "hello2 from tRPC",
+        },
+      ],
+    });
+  };
   if (session) {
     return (
       <>
         Signed in
         <br />
         <button onClick={() => signOut()}>Sign out</button>
+        <button onClick={makeTweet}> makkk ke tweet</button>
       </>
     );
   }

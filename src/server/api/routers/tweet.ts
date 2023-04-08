@@ -47,14 +47,31 @@ export const tweetRouter = createTRPCRouter({
         return tweet;
       }
     }),
-    scheduleTweets: protectedProcedure.input(z.object({
+  scheduleTweets: protectedProcedure
+    .input(
+      z.object({
         tweets: z.array(
-            z.object({
-                text: z.string(),
-                scheduled_at: z.string(),
-            })
-        )
-    })).mutation(async ({ ctx, input: { tweets } }) => {
-        
-    })
+          z.object({
+            text: z.string(),
+            scheduled_at: z.string(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input: { tweets } }) => {
+      const account = await ctx.prisma.account.findFirst({
+        where: {
+          userId: ctx.session.user.id,
+        },
+      });
+      try {
+        await ctx.cronJobServer.post("schedule_tweets", {
+          schedule_tweets:tweets,
+          token: account?.access_token,
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      return "success";
+    }),
 });
