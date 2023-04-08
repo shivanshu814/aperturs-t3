@@ -43,6 +43,9 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
+      if (!isNewUser) {
+        console.log({ isNewUser });
+      }
       if (account) {
         token.accessToken = account.accessToken;
         token.refreshToken = account.refreshToken;
@@ -71,11 +74,13 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
+      type: "credentials",
 
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("No credentials found");
         }
+        console.log("credentials", credentials);
         const account = await prisma.user.findUnique({
           where: { email: credentials.email },
           select: {
@@ -107,7 +112,6 @@ export const authOptions: NextAuthOptions = {
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID ?? "",
       clientSecret: process.env.TWITTER_CLIENT_SECRET ?? "",
-      version: "2.0",
       authorization: {
         url: "https://twitter.com/i/oauth2/authorize",
         params: {
@@ -118,8 +122,8 @@ export const authOptions: NextAuthOptions = {
       token: {
         url: "https://api.twitter.com/2/oauth2/token",
       },
+      allowDangerousEmailAccountLinking: true,
     }),
-
     /**
      * ...add more providers here.
      *
