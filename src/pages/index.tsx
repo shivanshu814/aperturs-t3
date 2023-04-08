@@ -4,11 +4,18 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import { useState } from "react";
 
 const Home: NextPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const { mutateAsync: registeruser } = api.user.registerUser.useMutation();
-
+  const register = () => {
+    registeruser({ email: email, password: password }).then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <>
       <Head>
@@ -45,6 +52,17 @@ const Home: NextPage = () => {
               </div>
             </Link>
           </div>
+          <input
+            value={email}
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            value={password}
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button onClick={register}>Register</button>
           <div className="flex flex-col items-center gap-2">
             <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
@@ -81,6 +99,7 @@ const AuthShowcase: React.FC = () => {
     <>
       Not signed in <br />
       <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => signIn("twitch")}>Sign In twitter</button>
     </>
   );
 };
