@@ -49,14 +49,7 @@ export const tweetRouter = createTRPCRouter({
     }),
   scheduleTweets: protectedProcedure
     .input(
-      z.object({
-        tweets: z.array(
-          z.object({
-            text: z.string(),
-            scheduled_at: z.string(),
-          })
-        ),
-      })
+      z.object({ tweets: z.array(z.object({text: z.string(),scheduled_at: z.string(),})),})
     )
     .mutation(async ({ ctx, input: { tweets } }) => {
       const account = await ctx.prisma.account.findFirst({
