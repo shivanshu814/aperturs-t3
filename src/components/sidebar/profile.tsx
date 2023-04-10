@@ -2,6 +2,7 @@ import React from 'react'
 import {MdNotifications} from 'react-icons/md'
 import {IoMdContact,IoMdSettings} from 'react-icons/io'
 import {BiLogOut} from 'react-icons/bi'
+import Link from 'next/link'
 
 
 const Profile = () => {
@@ -36,12 +37,16 @@ const Profile = () => {
 const Menu = () => {
   return (
     <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-34">
+      <Link href={'/profile'}>
     <li>
+      
       <span className='text-sm flex justify-between'>
-        <a>Profile</a>
+        <a >Profile</a>
         <IoMdContact className='text-xl mx-2' />
         </span>
+        
     </li>
+    </Link>
     <li>
       <span className='text-sm  flex justify-between'>
         <a>Settings</a>

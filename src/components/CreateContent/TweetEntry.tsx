@@ -67,6 +67,7 @@ const TweetEntry = () => {
         <div className="flex justify-end">
           <div>
             <input
+            className="bg-transparent focus:outline-none mr-1"
               value={schudule}
               onChange={(event) => setSchudule(event.target.value)}
               type="datetime-local"
