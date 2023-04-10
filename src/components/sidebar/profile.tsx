@@ -37,16 +37,13 @@ const Profile = () => {
 const Menu = () => {
   return (
     <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-34">
-      <Link href={'/profile'}>
-    <li>
-      
+    <li> 
       <span className='text-sm flex justify-between'>
         <a >Profile</a>
         <IoMdContact className='text-xl mx-2' />
-        </span>
+      </span>
         
     </li>
-    </Link>
     <li>
       <span className='text-sm  flex justify-between'>
         <a>Settings</a>

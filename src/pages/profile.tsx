@@ -1,11 +1,11 @@
 import React from 'react'
-import { Layout } from '~/components'
+import { Layout,ProfileHeader } from '~/components'
 
 const ProfilePage = () => {
   return (
     <Layout>
         <div className='flex flex-col items-center justify-center'>
-            <h1 className='text-2xl'>Profile Page</h1>
+            <ProfileHeader />
         </div>
     </Layout>
   )
