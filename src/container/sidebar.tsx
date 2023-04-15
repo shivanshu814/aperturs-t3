@@ -11,7 +11,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className='top-0   left-0 h-full m-0 bg-neutral
+    <div className='top-0  fixed left-0 h-full m-0 bg-neutral
     flex flex-col shadow-lg z-20 px-6 pt-7 gap-2'>
 
         <Profile />
