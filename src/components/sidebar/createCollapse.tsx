@@ -1,56 +1,69 @@
-import React,{useState} from 'react'
-import { SideBarButton } from '~/components'
-import {IoPencil} from 'react-icons/io5';
+import React, { useState, useEffect } from 'react';
+import { SideBarButton } from '~/components';
+import { IoPencil } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 
 const CreateCollapse = () => {
+  const [selectedButton, setSelectedButton] = useState(0);
+  const router = useRouter();
 
-    const [selectedButton, setSelectedButton] = useState(0);
+  const handleButtonClick = (buttonIndex: number) => {
+    setSelectedButton(buttonIndex);
+  };
 
-    const handleButtonClick = (buttonIndex: number) => {
-      setSelectedButton(buttonIndex);
-    };
+  useEffect(() => {
+    // Get the current path from the router object
+    const currentPath = router.asPath;
+
+    // Set the selected button based on the current path
+    switch (currentPath) {
+      case '/dashboard':
+        setSelectedButton(1);
+        break;
+      case '/drafts':
+        setSelectedButton(2);
+        break;
+      case '/create':
+        setSelectedButton(3);
+        break;
+      default:
+        setSelectedButton(0);
+    }
+  }, [router.asPath]);
 
   return (
-  // <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box shadow-sm">
-  //   <div className="collapse-title text-xl font-medium">
-  //     Create
-  //   </div>
-  //   <div className="collapse-content"> 
-  //     <div tabIndex={0} >
-
-  //       <SideBarButton icon= {<IoPencil className='text-xl ml-4 mr-2' />} text='Create'
-  //       onClick={() => {
-  //         handleButtonClick(0);
-  //       }} selected={selectedButton == 0} />
-
-  //     </div>
-  //   </div>
-  // </div>
-
-  <div className='flex-col flex gap-2'>
-
-        <span className='text-md ml-1 font-light'>CREATE</span>
-        <SideBarButton icon= {<IoPencil className='text-xl mx-4' />} text='Create'
-        onClick={() => {
-          handleButtonClick(0);
-        }} selected={selectedButton == 0} 
-        />
-
-        <SideBarButton icon= {<IoPencil className='text-xl mx-4' />} text='Create'
+    <div className="flex-col flex gap-2">
+      <span className="text-md ml-1 font-light">CREATE</span>
+      <SideBarButton
+        icon={<IoPencil className="text-xl mx-4" />}
+        text="Create"
         onClick={() => {
           handleButtonClick(1);
-        }} selected={selectedButton == 1} 
-        />
-       
+          router.push('/dashboard');
+        }}
+        selected={selectedButton == 1}
+      />
 
-        <SideBarButton icon= {<IoPencil className='text-xl mx-4' />} text='Create'
+      <SideBarButton
+        icon={<IoPencil className="text-xl mx-4" />}
+        text="Drafts"
+        onClick={() => {
+          router.push('/drafts');
+          handleButtonClick(2);
+        }}
+        selected={selectedButton == 2}
+      />
+
+      <SideBarButton
+        icon={<IoPencil className="text-xl mx-4" />}
+        text="Create"
         onClick={() => {
           handleButtonClick(2);
-        }} selected={selectedButton == 2} 
-        />
+        }}
+        selected={selectedButton == 3}
+      />
+    </div>
+  );
+};
 
-  </div>
-  )
-}
-
-export default CreateCollapse
+export default CreateCollapse;

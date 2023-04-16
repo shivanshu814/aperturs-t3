@@ -1,6 +1,5 @@
 import React from "react";
 import { CreateButton } from "~/components";
-import LinkTwitterButton from "~/components/LinkTwitter/button";
 
 const ContentPage = () => {
   return (
@@ -9,7 +8,6 @@ const ContentPage = () => {
         <h2 className="text-2xl font-bold">Content</h2>
         <div className="flex ">
           <CreateButton />
-          <LinkTwitterButton />
         </div>
       </div>
     </div>
