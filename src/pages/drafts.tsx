@@ -1,9 +1,13 @@
 import React from 'react'
-import { Layout } from '~/components'
+import { Layout,DraftPage } from '~/components'
+
 
 const DraftPost = () => {
   return (
     <Layout>
+        <div className="relative flex">
+        <DraftPage />
+        </div>
     </Layout>    
   )
 }

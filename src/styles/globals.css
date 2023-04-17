@@ -18,3 +18,7 @@
 .boxShadowCust {
   box-shadow: 11px 11px 39px #e0e0e0, -11px -11px 39px #ffffff;
 }
+
+.postShadow {
+  box-shadow: 2px 2px 10px #e0e0e0, -2px -2px 10px #ffffff;
+}

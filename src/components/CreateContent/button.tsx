@@ -1,20 +1,30 @@
 import React from "react";
 import { TweetEntry } from "~/components";
+import {IoPencilSharp} from 'react-icons/io5'
 
-const CreateButton = () => {
+type CreateButtonProps = {
+  text: string;
+};
+
+const CreateButton: React.FC<CreateButtonProps> = ({ text }) => {
   return (
     <div>
       <div className="flex">
         <label
           htmlFor="my-modal-3"
-          className="btn-primary btn rounded-lg h-12 w-28 text-white text-sm font-bold"
+          className="btn-primary btn gap-2 flex text-white"
         >
-          Create
+          {text}
+          <IoPencilSharp className="ml-2" />   
         </label>
       </div>
-      <PopUp />
+      <PopUp/>
     </div>
   );
+};
+
+type PopUpProps = {
+  postId: string;
 };
 
 const PopUp = () => {
@@ -30,7 +40,7 @@ const PopUp = () => {
             ✕
           </label>
           <h3 className="text-lg font-bold">New Post</h3>
-          <TweetEntry />
+          <TweetEntry postId=''/>
         </div>
       </div>
     </div>

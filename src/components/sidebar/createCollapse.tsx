@@ -23,7 +23,7 @@ const CreateCollapse = () => {
       case '/drafts':
         setSelectedButton(2);
         break;
-      case '/create':
+      case '/ideas':
         setSelectedButton(3);
         break;
       default:
@@ -59,6 +59,7 @@ const CreateCollapse = () => {
         text="Ideas"
         onClick={() => {
           handleButtonClick(2);
+          router.push('/ideas');
         }}
         selected={selectedButton == 3}
       />

@@ -13,8 +13,18 @@ type Content = {
   content?: string;
 };
 
-const TweetEntry = () => {
-  const [tweets, setTweets] = useState<Tweet[]>([{ id: 0 }]);
+
+type TweetEntryProps = {
+  postId: string;
+};
+
+const TweetEntry:React.FC<TweetEntryProps> = ({  postId }) => {
+  const [tweets, setTweets] = useState<Tweet[]>([
+    { id: 0 },
+    // { id: 0, content: "Hello World" },
+    // { id: 1, content: "Hello React" },
+  ]);
+  
   const [jwt, setJWT] = useState("");
   useEffect(() => {
     setJWT(localStorage.getItem("JWT") ?? "");
@@ -40,7 +50,6 @@ const TweetEntry = () => {
       return { id: tweet.id, content: text };
     });
     setContent(newContent);
-  
   };
 
   const textAreaRefs = useRef<(HTMLTextAreaElement | null)[]>([]);
@@ -53,6 +62,7 @@ const TweetEntry = () => {
             <SingleTweet
               index={index}
               onRemove={() => handleRemoveTweet(index)}
+              value={tweets[index]?.content || ""}
               ref={(element) => textAreaRefs.current.splice(index, 1, element)}
             />
           </div>
@@ -84,7 +94,7 @@ const TweetEntry = () => {
               Schedule
             </button>
             <div className="dropdown  dropdown-top dropdown-end dropdown-hover">
-              <label tabIndex={0} className="btn btn-primary py-1 mt-2 px-4 text-white"
+              <label tabIndex={0} className="btn btn-primary py-1 mt-2 px-2 border-l-2 border-secondary border-0 text-white"
               style={{
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
@@ -112,10 +122,11 @@ const TweetEntry = () => {
 type SingleTweetProps = {
   index: number;
   onRemove: () => void;
+  value: string;
 };
 
 const SingleTweet = React.forwardRef<HTMLTextAreaElement, SingleTweetProps>(
-  ({ index, onRemove }: SingleTweetProps, ref) => {
+  ({ index, onRemove,value }: SingleTweetProps, ref) => {
     const [count, setCount] = React.useState(280);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -132,7 +143,9 @@ const SingleTweet = React.forwardRef<HTMLTextAreaElement, SingleTweetProps>(
           className="block w-full bg-transparent  resize-none focus:outline-none"
           // maxLength={280}
           placeholder="What's happening?"
+          defaultValue={value}
           onChange={handleChange}
+          
           style={{ overflow: "hidden" }}
         />
         <div className="flex items-center justify-end">

@@ -7,7 +7,7 @@ const ContentPage = () => {
       <div className="w-full flex justify-between">
         <h2 className="text-2xl font-bold">Content</h2>
         <div className="flex ">
-          <CreateButton />
+          <CreateButton  text="Create" />
         </div>
       </div>
     </div>
