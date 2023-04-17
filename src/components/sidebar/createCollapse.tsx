@@ -56,7 +56,7 @@ const CreateCollapse = () => {
 
       <SideBarButton
         icon={<IoPencil className="text-xl mx-4" />}
-        text="Create"
+        text="Ideas"
         onClick={() => {
           handleButtonClick(2);
         }}

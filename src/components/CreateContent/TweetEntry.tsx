@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { TweetsQueue } from "./content";
+import {BsArrowBarDown} from 'react-icons/bs'
 
 
 type Tweet = {
@@ -73,10 +74,29 @@ const TweetEntry = () => {
               type="datetime-local"
             />
             <button
-              className="btn-primary mt-2 rounded-lg px-4 py-2 text-white"
+              className="btn btn-primary mt-2 rounded-lg px-4 py-2 text-white"
+              style={{
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              }}
+
               onClick={handleTweet} >
-              Tweet
+              Schedule
             </button>
+            <div className="dropdown  dropdown-top dropdown-end dropdown-hover">
+              <label tabIndex={0} className="btn btn-primary py-1 mt-2 px-4 text-white"
+              style={{
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+              }}
+              >
+                ↑
+              </label>
+              <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-44">
+              <li><a>Post Now</a></li>
+              <li><a>Draft</a></li>
+              </ul>
+            </div>
           </div>
         </div>
         {/* <div>
