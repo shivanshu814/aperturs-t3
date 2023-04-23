@@ -38,7 +38,8 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
-    twitterClient: (token: string) => new Client(token),
+    twitterClient: (token_or_authOptions: string | AuthClient) =>
+      new Client(token_or_authOptions),
     cronJobServer: axios.create({
       baseURL: "https://aperturs-cron-jobs.onrender.com/",
       timeout: 1000,
@@ -75,6 +76,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { Client } from "twitter-api-sdk";
 import axios from "axios";
+import { AuthClient } from "twitter-api-sdk/dist/types";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

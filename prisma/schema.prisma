@@ -55,6 +55,11 @@ model Session {
     @@index([userId])
 }
 
+model Twitter {
+    id String @unique
+    bearerToken String
+}
+
 model User {
     id            String    @id @default(cuid())
     name          String?

@@ -1,4 +1,4 @@
-import { protectedProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure } from "../trpc";
 import { createTRPCRouter } from "../trpc";
 import { z } from "zod";
 export const tweetRouter = createTRPCRouter({
@@ -30,26 +30,56 @@ export const tweetRouter = createTRPCRouter({
         return tweets;
       }
     }),
-  makeTweet: protectedProcedure
-    .input(z.object({ text: z.string() }))
-    .mutation(async ({ ctx, input: { text } }) => {
-      const account = await ctx.prisma.account.findFirst({
+  makeTweet: publicProcedure
+    .input(z.object({ text: z.string(), userId: z.string() }))
+    .mutation(async ({ ctx, input: { text, userId } }) => {
+      const secrets = await ctx.prisma.twitter.findFirst({
         where: {
-          userId: ctx.session.user.id,
+          id: userId,
         },
       });
+      console.log(secrets);
 
-      if (account?.access_token) {
-        const client = ctx.twitterClient(account.access_token);
-        const tweet = await client.tweets.createTweet({
-          text,
+      if (secrets?.bearerToken) {
+        try {
+          const client = ctx.twitterClient(secrets?.bearerToken);
+          console.log({ client });
+          const tweet = await client.tweets.createTweet({
+            text,
+          });
+          console.log({ tweet });
+          return tweet;
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }),
+  addSecrets: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        bearerToken: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input: { userId, bearerToken } }) => {
+      try {
+        await ctx.prisma.twitter.create({
+          data: {
+            bearerToken,
+            id: userId,
+          },
         });
-        return tweet;
+      } catch (e) {
+        console.error(e);
       }
     }),
   scheduleTweets: protectedProcedure
     .input(
-      z.object({ tweets: z.array(z.object({text: z.string(),scheduled_at: z.string(),})),})
+      z.object({
+        tweets: z.array(
+          z.object({ text: z.string(), scheduled_at: z.string() })
+        ),
+      })
     )
     .mutation(async ({ ctx, input: { tweets } }) => {
       const account = await ctx.prisma.account.findFirst({
@@ -59,7 +89,7 @@ export const tweetRouter = createTRPCRouter({
       });
       try {
         await ctx.cronJobServer.post("schedule_tweets", {
-          schedule_tweets:tweets,
+          schedule_tweets: tweets,
           token: account?.access_token,
         });
       } catch (e) {

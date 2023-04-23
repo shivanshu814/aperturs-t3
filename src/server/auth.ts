@@ -68,47 +68,6 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      type: "credentials",
-
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("No credentials found");
-        }
-        console.log("credentials", credentials);
-        const account = await prisma.user.findUnique({
-          where: { email: credentials.email },
-          select: {
-            id: true,
-            email: true,
-            role: true,
-            password: true,
-          },
-        });
-
-        if (!account) {
-          throw new Error("No account found");
-        }
-        if (!account.password) {
-          throw new Error("No password found");
-        }
-        const valid = bcrypt.compareSync(
-          credentials?.password,
-          account.password
-        );
-
-        if (!valid) {
-          throw new Error("Invalid password");
-        }
-        const { password, ...user } = account;
-        return user as User;
-      },
-    }),
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID ?? "",
       clientSecret: process.env.TWITTER_CLIENT_SECRET ?? "",
