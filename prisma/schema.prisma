@@ -59,6 +59,10 @@ model Twitter {
     id String @unique
     bearerToken String
 }
+model Draft {
+    userId String @unique
+    post String
+}
 
 model User {
     id            String    @id @default(cuid())

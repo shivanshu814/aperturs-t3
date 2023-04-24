@@ -43,7 +43,21 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
     setContent((prevContent) => prevContent.filter((_, i) => i !== index));
   };
   const { mutateAsync: makeTweet } = api.tweet.makeTweet.useMutation();
-
+  const { mutateAsync: makeSchedule } = api.tweet.scheduleTweets.useMutation();
+  const onSchedule = async () => {
+    await handleTweet();
+    console.log("schedule", schudule);
+    const tws = content.map((value) => {
+      if (value.content === undefined) return;
+      return { text: value.content, scheduled_at: schudule };
+    });
+    if (tws) {
+      console.log("no tweets");
+      await makeSchedule({
+        tweets: tws,
+      });
+    }
+  };
   const handleTweet = async () => {
     const newContent = tweets.map((tweet, index) => {
       const textArea = textAreaRefs.current[index];
@@ -90,7 +104,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
               }}
-              onClick={handleTweet}
+              onClick={onSchedule}
             >
               Schedule
             </button>
@@ -111,9 +125,15 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
               >
                 <li
                   onClick={async () => {
-                    await makeTweet({
-                      text: tweets[0]?.content ?? "",
-                      userId: user?.id ?? "",
+                    await handleTweet();
+                    console.log({ content });
+                    console.log("HII");
+                    content.forEach(async (c) => {
+                      if (c.content) {
+                        await makeTweet({
+                          text: c.content,
+                        });
+                      }
                     });
                   }}
                 >
