@@ -74,7 +74,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { Client } from "twitter-api-sdk";
+import { Client, auth } from "twitter-api-sdk";
 import axios from "axios";
 import { AuthClient } from "twitter-api-sdk/dist/types";
 
