@@ -12,7 +12,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ postId }) => {
   return (
     <div className="postShadow flex  w-64 flex-col rounded-md p-6">
       <div className="mb-2 flex justify-between">
-        <h1 className="text-xl">Draft</h1>
+         <h1 className="text-xl">Draft</h1>
       </div>
       <div className="h-40 overflow-auto">
         <p className="text-sm">
@@ -56,7 +56,7 @@ const ButtonGroup:React.FC<ButtonGroupProps> = ({postId}) => {
         </button>
       </div>
       <div className="tooltip" data-tip="delete">
-        <button className="btn">
+        <button className="btn hover:bg-red-200">
           <TbTrashFilled />
         </button>
       </div>
@@ -80,7 +80,7 @@ const DraftPopUp: React.FC<DraftPopUpProps> = ({postId}) => {
             with id: {postId}
             
           </h3>
-          <TweetEntry postId="" />
+          <TweetEntry postId={postId}/>
         </label>
       </label>
     </div>
