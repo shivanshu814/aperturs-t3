@@ -8,7 +8,7 @@ const ProfileHeader = () => {
     console.log(session)
 
     if(status === 'loading') return <div>Loading...</div>
-    if(!session) return <div>Something Went Wrong</div>
+    if(!session) return <div></div>
     
 
   return (
