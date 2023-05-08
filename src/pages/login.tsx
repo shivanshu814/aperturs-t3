@@ -35,7 +35,7 @@ const Login = () => {
         <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
       </div>
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <SignIn path="/login" signUpUrl="/signup" afterSignInUrl={"/dashboard"} />
+        <SignIn path="/login" signUpUrl="/signup" afterSignInUrl="/dashboard" />
       </div>
     </div>
   );
