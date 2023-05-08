@@ -4,7 +4,8 @@ import { IoMdContact, IoMdSettings } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useAuth } from "@clerk/nextjs";
+import { UserButton, useAuth } from "@clerk/nextjs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const Profile = () => {
   return (
@@ -14,14 +15,16 @@ const Profile = () => {
       </Link>
       <div className="flex items-center">
         <MdNotifications className="mx-4 cursor-pointer text-2xl" />
+        <UserButton/>
         <div className="dropdown-end dropdown-hover dropdown">
-          <img
+          {/* <img
             src="profile.svg"
             width={30}
             height={30}
             className="cursor-pointer rounded-full"
             tabIndex={0}
-          />
+          /> */}
+          <BsThreeDotsVertical className="mx-4 cursor-pointer text-2xl" />
           <Menu />
         </div>
       </div>
@@ -39,7 +42,7 @@ const Menu = () => {
       <Link href={"/profile"}>
         <li>
           <div className="flex justify-between text-sm">
-            <p>Profile</p>
+            <p>Socials</p>
             <IoMdContact className="mx-2 text-xl " />
           </div>
         </li>
