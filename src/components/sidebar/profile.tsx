@@ -53,16 +53,17 @@ const Menu = () => {
         <IoMdSettings className='text-xl mx-2' />
         </span>
     </li> */}
+
       <li>
         <span
           className="flex  justify-between text-sm"
-          onClick={() => {
-            signOut();
-            logOutClerk();
-          }}
+          // onClick={() => {
+          //   signOut();
+          //   logOutClerk();
+          // }}
         >
-          <a>Logout</a>
-          <BiLogOut className="mx-2 text-xl" />
+          <a>Settings</a>
+          <IoMdSettings className="mx-2 text-xl" />
         </span>
       </li>
     </ul>

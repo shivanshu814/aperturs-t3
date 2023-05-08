@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
+import { useUser } from '@clerk/nextjs';
 
 const withAuth = <T extends Record<string, unknown>>(
   WrappedComponent: NextPage<T>,
@@ -10,11 +11,12 @@ const withAuth = <T extends Record<string, unknown>>(
     const { data: session,status } = useSession();
     const router = useRouter();
     console.log(status,session);
+    const { user } = useUser();
 
     useEffect(() => {
-      if (status != 'authenticated' && session != undefined) { 
+      if (user) { 
         // If the user is not logged in, redirect to the login or signup page
-        router.push('/login');
+        router.replace('/login');
       }
     }, []);
 
