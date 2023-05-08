@@ -10,7 +10,7 @@ const BasicButton: FC<SideBarButtonProps> = ({ onClick, text, }) => {
   return (
     <button 
     onClick={onClick}
-    className='btn-primary btn w-44 text-white'>{text}</button>
+    className='btn-primary btn w-44 text-white ml-1'>{text}</button>
   )
 }
 
