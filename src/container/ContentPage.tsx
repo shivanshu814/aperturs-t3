@@ -32,7 +32,7 @@ const ContentPage = () => {
               text={"Connect Twitter"}
             />
           ) : null}
-          <label htmlFor="my-modal" className="btn">
+          <label htmlFor="my-modal" className="btn ml-1">
             open modal
           </label>
 
