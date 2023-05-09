@@ -3,6 +3,7 @@ import BasicButton from "./basic_button";
 import { IoIosAddCircle } from "react-icons/io";
 import {FaFacebookSquare,FaLinkedinIn} from 'react-icons/fa'
 import {AiFillInstagram,AiOutlineTwitter,} from 'react-icons/ai'
+import { useRouter } from "next/router";
 
 const ConnectSocials = () => {
   return (
@@ -21,6 +22,8 @@ const ConnectSocials = () => {
 };
 
 const AddSocial = () => {
+
+
   return (
     <div>
       <label htmlFor="my-modal-3" className="btn-primary btn gap-2 text-white">
@@ -48,13 +51,19 @@ const AddSocial = () => {
 };
 
 const Socials = () => {
+
+  const router = useRouter()
+
+
   return (
     <div className="grid grid-cols-3 py-4 gap-4">
       <button className="btn hover:bg-primary hover:text-white hover:border-0  gap-2">
         <FaFacebookSquare className="text-2xl " />
         <p>Facebook</p>
       </button>
-      <button className="btn hover:bg-primary hover:text-white hover:border-0  gap-2">
+      <button className="btn hover:bg-primary hover:text-white hover:border-0  gap-2"
+      onClick={()=>router.push('/socials/twitter')}
+      >
         <AiOutlineTwitter className="text-2xl " />
         <p>Twitter</p>
       </button>
