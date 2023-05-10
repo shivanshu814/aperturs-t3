@@ -32,31 +32,7 @@ const ContentPage = () => {
               text={"Connect Twitter"}
             />
           ) : null}
-          <label htmlFor="my-modal" className="btn ml-1">
-            open modal
-          </label>
-
-          {/* Put this part before </body> tag */}
-          <input type="checkbox" id="my-modal" className="modal-toggle" />
-          <div className="modal">
-            <div className="modal-box">
-              <input
-                type="text"
-                value={bearerToken}
-                onChange={(e) => setbearerToken(e.target.value)}
-                placeholder="Client Secret  "
-                className="input-bordered input w-full max-w-xs"
-              />
-              <div className="modal-action">
-                <label onClick={onSubmit} htmlFor="my-modal" className="btn">
-                  Submit
-                </label>
-                <label htmlFor="my-modal" className="btn">
-                  Close
-                </label>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>

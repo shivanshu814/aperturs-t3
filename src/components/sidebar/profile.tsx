@@ -39,7 +39,7 @@ const Menu = () => {
       tabIndex={0}
       className="w-34 dropdown-content menu rounded-box bg-base-100 p-2 shadow"
     >
-      <Link href={"/profile"}>
+      <Link href={"/socials"}>
         <li>
           <div className="flex justify-between text-sm">
             <p>Socials</p>

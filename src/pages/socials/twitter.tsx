@@ -1,8 +1,14 @@
+import Link from "next/link";
 import React from "react";
+import { IoIosArrowBack } from "react-icons/io";
 
 const AddTwitter = () => {
   return (
     <div className="w-screen lg:px-56 md:px-24 px-10 py-28">
+      <Link href={'/socials'} className="flex items-center space-x-2 my-2 text-sm text-gray-600 hover:text-gray-900">
+        <IoIosArrowBack size={20} />
+        <span>Back</span>
+    </Link>
       <h1 className="text-4xl font-medium text-primary">Add Twitter</h1>
       <p className="mt-2 text-gray-500">
         you will need to give your own
@@ -59,7 +65,7 @@ function ApiBox() {
       </div>
       <div className="w-full flex justify-end">
       <button className="btn btn-primary sm:w-56 w-24  text-white rounded-xl px-4 py-2 mt-4">
-        Save
+        Connect
       </button>
       </div>
       

@@ -1,30 +1,52 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import { useUser } from '@clerk/nextjs';
+import { PropsWithChildren } from 'react'
 
-const withAuth = <T extends Record<string, unknown>>(
-  WrappedComponent: NextPage<T>,
-): NextPage<T> => {
-  const AuthComponent: NextPage<T> = (props: T) => {
-    const { data: session,status } = useSession();
+
+
+export { RouteGuard };
+
+function RouteGuard(props: PropsWithChildren) {
     const router = useRouter();
-    console.log(status,session);
-    const { user } = useUser();
+    const [authorized, setAuthorized] = useState(false);
+    const {isSignedIn} = useUser();
+
 
     useEffect(() => {
-      if (user) { 
-        // If the user is not logged in, redirect to the login or signup page
-        router.replace('/login');
-      }
+        // on initial load - run auth check 
+        authCheck(router.asPath);
+
+        // on route change start - hide page content by setting authorized to false  
+        const hideContent = () => setAuthorized(false);
+        router.events.on('routeChangeStart', hideContent);
+
+        // on route change complete - run auth check 
+        router.events.on('routeChangeComplete', authCheck)
+
+        // unsubscribe from events in useEffect return function
+        return () => {
+            router.events.off('routeChangeStart', hideContent);
+            router.events.off('routeChangeComplete', authCheck);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // If the user is logged in, render the protected component
-    return session ? <WrappedComponent {...props} /> : null;
-  };
+    function authCheck(url: string) {
+        // redirect to login page if accessing a private page and not logged in 
+        const publicPaths = ['/login', '/signup'];
+        const path = url.split('?')[0];
+        if (!isSignedIn && !publicPaths.includes(path||'/login')) {
+            setAuthorized(false);
+            router.push({
+                pathname: '/login',
+                query: { returnUrl: router.asPath }
+            });
+        } else {
+            setAuthorized(true);
+        }
+    }
 
-  return AuthComponent;
-};
-
-export default withAuth;
+    return (authorized && props.children);
+}
