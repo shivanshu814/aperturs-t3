@@ -51,12 +51,12 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
       if (value.content === undefined) return;
       return { text: value.content, scheduled_at: schudule };
     });
-    if (tws) {
-      console.log("no tweets");
-      await makeSchedule({
-        tweets: tws,
-      });
-    }
+    // if (tws) {
+    //   console.log("no tweets");
+    //   await makeSchedule({
+    //     tweets: tws,
+    //   });
+    // }
   };
   const handleTweet = async () => {
     const newContent = tweets.map((tweet, index) => {
