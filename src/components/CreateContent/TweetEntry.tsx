@@ -45,7 +45,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
   const { mutateAsync: makeTweet } = api.tweet.makeTweet.useMutation();
   const { mutateAsync: makeSchedule } = api.tweet.scheduleTweets.useMutation();
   const onSchedule = async () => {
-    await handleTweet();
+     await handleTweet();
     console.log("schedule", schudule);
     const tws = content.map((value) => {
       if (value.content === undefined) return;
