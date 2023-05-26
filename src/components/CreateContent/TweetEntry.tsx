@@ -58,7 +58,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
     //   });
     // }
   };
-  const handleTweet = async () => {
+  const  handleTweet = async () => {
     const newContent = tweets.map((tweet, index) => {
       const textArea = textAreaRefs.current[index];
       const text = textArea?.value;
@@ -125,7 +125,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
               >
                 <li
                   onClick={async () => {
-                    await handleTweet();
+                     handleTweet();
                     console.log({ content });
                     console.log("HII");
                     content.forEach(async (c) => {

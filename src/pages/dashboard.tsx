@@ -1,11 +1,6 @@
-
 import React from "react";
 import { Layout } from "~/components";
 import { ContentPage, Sidebar } from "~/container";
-
-
-
-
 
 
 const Dashboard = () => {
