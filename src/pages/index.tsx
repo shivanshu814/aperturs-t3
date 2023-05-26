@@ -10,9 +10,17 @@ export default function Home() {
   useEffect(() => {
   // Only execute this code on the client side
     if (user) {
-      router.replace('/dashboard');
+      router.replace('/dashboard')
+        .catch((error) => {
+        // Handle error here
+        console.error('Error while redirecting:', error);
+      });
     } else  {
-      router.replace('/login');
+      router.replace('/login')
+      .catch((error) => {
+        // Handle error here
+        console.error('Error while redirecting:', error);
+      });
     }
   
   }, []);

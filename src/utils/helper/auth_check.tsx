@@ -42,7 +42,10 @@ function RouteGuard(props: PropsWithChildren) {
             router.push({
                 pathname: '/login',
                 query: { returnUrl: router.asPath }
-            });
+            })
+            .catch((error) => {
+                console.error('Error while navigating to login', error);
+              });
         } else {
             setAuthorized(true);
         }

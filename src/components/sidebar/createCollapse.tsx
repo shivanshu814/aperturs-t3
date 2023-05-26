@@ -39,7 +39,10 @@ const CreateCollapse = () => {
         text="Create"
         onClick={() => {
           handleButtonClick(1);
-          router.push('/dashboard');
+          router.push('/dashboard')
+          .catch((error) => {
+            console.error('Error while navigating to /dashboard:', error);
+          });
         }}
         selected={selectedButton == 1}
       />
@@ -48,7 +51,11 @@ const CreateCollapse = () => {
         icon={<IoPencil className="text-xl mx-4" />}
         text="Drafts"
         onClick={() => {
-          router.push('/drafts');
+          router.push('/drafts')
+          .catch((error) => {
+            // Handle error here
+            console.error('Error while navigating to /drafts:', error);
+          });
           handleButtonClick(2);
         }}
         selected={selectedButton == 2}
@@ -59,7 +66,11 @@ const CreateCollapse = () => {
         text="Ideas"
         onClick={() => {
           handleButtonClick(2);
-          router.push('/ideas');
+          router.push('/ideas')
+          .catch((error) => {
+            // Handle error here
+            console.error('Error while navigating to /ideas:', error);
+          });
         }}
         selected={selectedButton == 3}
       />

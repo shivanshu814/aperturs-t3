@@ -1,4 +1,4 @@
-export let TweetsQueue = [
+export const TweetsQueue = [
 
     {
        id: 1,
