@@ -1,5 +1,4 @@
 import React from "react";
-import BasicButton from "./basic_button";
 import { IoIosAddCircle } from "react-icons/io";
 import {FaFacebookSquare,FaLinkedinIn} from 'react-icons/fa'
 import {AiFillInstagram,AiOutlineTwitter,} from 'react-icons/ai'

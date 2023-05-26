@@ -42,7 +42,7 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
+    jwt({ token, user, account, profile, isNewUser }) {
       if (!isNewUser) {
         console.log({ isNewUser });
       }
