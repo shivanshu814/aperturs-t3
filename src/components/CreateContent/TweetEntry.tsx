@@ -1,6 +1,4 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { TweetsQueue } from "./content";
-import { BsArrowBarDown } from "react-icons/bs";
 import { api } from "~/utils/api";
 import { useUser } from "@clerk/nextjs";
 
