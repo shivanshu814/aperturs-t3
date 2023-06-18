@@ -1,0 +1,121 @@
+import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+  List,
+  ListItem,
+  ListItemPrefix,
+  Typography,
+} from "@material-tailwind/react";
+import React from "react";
+import {
+  ChevronRightIcon,
+  ChevronDownIcon,
+  CubeTransparentIcon,
+} from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { MdSpaceDashboard } from "react-icons/md";
+import { BsFileCodeFill } from "react-icons/bs";
+
+const AccordanceMenu = [
+  {
+    open: 1,
+    text: "Dashboard",
+    icon: <MdSpaceDashboard className="h-5 w-5" />,
+    items: [
+      {
+        text: "Create",
+        icon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
+        url: "/dashboard",
+      },
+      {
+        text: "Queue",
+        url: "/queue",
+      },
+      {
+        text: "Drafts",
+        url: "/drafts",
+      },
+    ],
+  },
+  {
+    open: 2,
+    text: "Projects",
+    icon: <BsFileCodeFill className="h-5 w-5" />,
+    items: [
+      {
+        text: "Create",
+        icon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
+        url: "/create",
+      },
+    ],
+  },
+];
+
+export default function AccordionMenu() {
+  const [openItems, setOpenItems] = React.useState<number[]>([1, 2]);
+  const router = useRouter();
+
+  const currentPath = (url: string) => {
+    return url === router.asPath;
+  };
+
+  const handleOpen = (value: number) => {
+    if (openItems.includes(value)) {
+      setOpenItems(openItems.filter((item) => item !== value));
+    } else {
+      setOpenItems([...openItems, value]);
+    }
+  };
+
+  return (
+    <div>
+      {AccordanceMenu.map((item, index) => (
+        <Accordion
+          open={openItems.includes(item.open)}
+          icon={
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`mx-auto h-4 w-4 transition-transform ${
+                openItems.includes(item.open) ? "rotate-180" : ""
+              }`}
+            />
+          }
+          key={index}
+        >
+          <ListItem className="p-0" selected={openItems.includes(item.open)}>
+            <AccordionHeader
+              onClick={() => handleOpen(item.open)}
+              className="border-b-0 p-3"
+            >
+              <ListItemPrefix>
+                {item.icon}
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-normal">
+                {item.text}
+              </Typography>
+            </AccordionHeader>
+          </ListItem>
+          <AccordionBody className="py-1">
+            <List className="p-0">
+              {item.items.map((subItem, subIndex) => (
+                <Link href={subItem.url} key={subIndex}>
+                  <ListItem
+                    className={`${
+                      currentPath(subItem.url) &&
+                      "!bg-primary !text-white !shadow-sm hover:bg-primary hover:text-white"
+                    }`}
+                  >
+                    <ListItemPrefix>{subItem.icon ? subItem.icon :  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />}</ListItemPrefix>
+                    {subItem.text }
+                  </ListItem>
+                </Link>
+              ))}
+            </List>
+          </AccordionBody>
+        </Accordion>
+      ))}
+    </div>
+  );
+}

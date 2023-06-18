@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Layout } from "~/components";
 import { ContentPage, Sidebar } from "~/container";
 
@@ -7,17 +7,22 @@ const Dashboard = () => {
 
   return (
 
-    <Layout>
       <div className="relative flex">
         <ContentPage />
       </div>
-    </Layout>
 
   );
 
 };
 
-
+Dashboard.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}
+ 
 
 
 export default Dashboard;
