@@ -1,20 +1,16 @@
 import React, { PropsWithChildren, useEffect } from "react";
 import { Sidebar } from "~/container";
+import SideBar from "./layouts/sidebar";
 
-
-const Layout = ( props: PropsWithChildren ) => {
-
-  
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-
-    <div className="h-screen flex flex-row justify-start">
-      <Sidebar />
-      <div className="flex-1 p-4 ml-60">
-          {props.children}
+    <div>
+      <div className="relative gap-8 lg:flex">
+        <SideBar />
+        <div className="mt-8 flex w-full justify-center lg:mt-1 lg:block">
+          {children}
+        </div>
       </div>
     </div>
-
   );
-};
-
-export default Layout;
+}
