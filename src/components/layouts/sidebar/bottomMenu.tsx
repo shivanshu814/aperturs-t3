@@ -10,11 +10,13 @@ import {
     PowerIcon,
   } from "@heroicons/react/24/solid";
 
+import { MdCircleNotifications } from 'react-icons/md';
+
 
 const bottomMenu = [
     {
-      text: "Inbox",
-      icon: <InboxIcon className="h-5 w-5" />,
+      text: "Notifications",
+      icon: <MdCircleNotifications className="h-5 w-5" />,
       suffix: (
         <Chip
         value="14"
@@ -50,7 +52,7 @@ function BottomMenu() {
               {
           bottomMenu.map((item, index) => (
             <Link href={item.url}>
-              <ListItem>
+              <ListItem key={index}>
               <ListItemPrefix>{item.icon}</ListItemPrefix>
               {item.text}
               {item.suffix && <ListItemSuffix>{item.suffix}</ListItemSuffix>}

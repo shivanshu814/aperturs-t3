@@ -14,8 +14,7 @@ const CreateCollapse = () => {
   useEffect(() => {
     // Get the current path from the router object
     const currentPath = router.asPath;
-
-    // Set the selected button based on the current path
+    
     switch (currentPath) {
       case '/dashboard':
         setSelectedButton(1);
