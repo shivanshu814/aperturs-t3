@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect } from "react";
 import { Sidebar } from "~/container";
-import SideBar from "./layouts/sidebar";
+import SideBar from "./layouts/sidebar/sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

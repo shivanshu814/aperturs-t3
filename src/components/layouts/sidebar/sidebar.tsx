@@ -15,17 +15,19 @@ import {
 import {
   PresentationChartBarIcon,
   ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
 } from "@heroicons/react/24/solid";
 import {
   ChevronRightIcon,
   ChevronDownIcon,
   CubeTransparentIcon,
 } from "@heroicons/react/24/outline";
+import BottomMenu from "./bottomMenu";
  
+
+
+
+
+
 
 export default function SideBar() {
   const [open, setOpen] = React.useState(0);
@@ -36,7 +38,7 @@ export default function SideBar() {
   };
  
   return (
-    <Card className="sticky top-4 left-4 h-[calc(100vh-2rem)]  max-w-[18rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="sticky bg-neutral top-4 left-4 h-[calc(100vh-2rem)]  max-w-[18rem] p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 flex items-center gap-4 p-4">
         <img src="/logo.svg" alt="brand" className="h-8 w-8" />
         <Typography variant="h5" color="blue-gray">
@@ -123,33 +125,7 @@ export default function SideBar() {
           </AccordionBody>
         </Accordion>
         <hr className="my-2 border-blue-gray-50" />
-        <ListItem>
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Inbox
-          <ListItemSuffix>
-            <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-          </ListItemSuffix>
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
-        <ListItem>
-          <ListItemPrefix>
-            <PowerIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Log Out
-        </ListItem>
+        <BottomMenu />
       </List>
       <Alert open={openAlert} className="mt-auto" onClose={() => setOpenAlert(false)}>
         <CubeTransparentIcon className="mb-4 h-12 w-12" />
