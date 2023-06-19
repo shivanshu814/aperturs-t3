@@ -8,7 +8,8 @@ import DraftPage from "./drafts/draft";
 import SideBar from "./layouts/sidebar/sidebar";
 import ContentPage from "./dashboard/ContentPage";
 import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
+import SocialTabs from "./post/tabs/socialtabs";
 
 
-export {CreateButton,TweetEntry,Layout,SideBar,
+export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,
      ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };
