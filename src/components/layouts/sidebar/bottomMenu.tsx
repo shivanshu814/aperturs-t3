@@ -49,15 +49,19 @@ const bottomMenu = [
 function BottomMenu() {
   return (
     <div>
-              {
+          {
           bottomMenu.map((item, index) => (
-            <Link href={item.url}>
-              <ListItem key={index}>
+            <div key={index}>
+            <Link href={item.url} >
+              <ListItem >
               <ListItemPrefix>{item.icon}</ListItemPrefix>
               {item.text}
               {item.suffix && <ListItemSuffix>{item.suffix}</ListItemSuffix>}
+
               </ListItem>
-            </Link>
+              </Link>
+              </div>
+
           ))}
     </div>
   )

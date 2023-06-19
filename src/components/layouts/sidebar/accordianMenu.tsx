@@ -18,42 +18,30 @@ import Link from "next/link";
 import { MdSpaceDashboard } from "react-icons/md";
 import { BsFileCodeFill } from "react-icons/bs";
 
-const AccordanceMenu = [
-  {
-    open: 1,
-    text: "Dashboard",
-    icon: <MdSpaceDashboard className="h-5 w-5" />,
-    items: [
-      {
-        text: "Create",
-        icon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
-        url: "/dashboard",
-      },
-      {
-        text: "Queue",
-        url: "/queue",
-      },
-      {
-        text: "Drafts",
-        url: "/drafts",
-      },
-    ],
-  },
-  {
-    open: 2,
-    text: "Projects",
-    icon: <BsFileCodeFill className="h-5 w-5" />,
-    items: [
-      {
-        text: "Create",
-        icon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
-        url: "/create",
-      },
-    ],
-  },
-];
 
-export default function AccordionMenu() {
+
+interface AccordanceProps {
+  open: number;
+  text: string;
+  icon: React.ReactNode;
+  items: {
+    subText: string;
+    subIcon?: React.ReactNode;
+    url: string;
+  }[];
+}
+
+interface MenuProps {
+  list: AccordanceProps[];
+}
+
+
+
+export default function AccordionMenu(props: MenuProps) {
+
+  const { list } = props;
+
+
   const [openItems, setOpenItems] = React.useState<number[]>([1, 2]);
   const router = useRouter();
 
@@ -71,7 +59,7 @@ export default function AccordionMenu() {
 
   return (
     <div>
-      {AccordanceMenu.map((item, index) => (
+      {list.map((item, index) => (
         <Accordion
           open={openItems.includes(item.open)}
           icon={
@@ -84,7 +72,7 @@ export default function AccordionMenu() {
           }
           key={index}
         >
-          <ListItem className="p-0" selected={openItems.includes(item.open)}>
+          <ListItem key={item.open} className="p-0" selected={openItems.includes(item.open)}>
             <AccordionHeader
               onClick={() => handleOpen(item.open)}
               className="border-b-0 p-3"
@@ -107,8 +95,8 @@ export default function AccordionMenu() {
                       "!bg-primary !text-white !shadow-sm hover:bg-primary hover:text-white"
                     }`}
                   >
-                    <ListItemPrefix>{subItem.icon ? subItem.icon :  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />}</ListItemPrefix>
-                    {subItem.text }
+                    <ListItemPrefix>{subItem.subIcon ? subItem.subIcon :  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />}</ListItemPrefix>
+                    {subItem.subText }
                   </ListItem>
                 </Link>
               ))}

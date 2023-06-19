@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Layout } from '~/components'
 
-function Queue() {
+export default function Post() {
   return (
     <div>
       
@@ -9,12 +9,11 @@ function Queue() {
   )
 }
 
-Queue.getLayout = function getLayout(page: ReactElement) {
+Post.getLayout = function getLayout(page: ReactElement) {
     return (
       <Layout>
         {page}
       </Layout>
     )
   }
-
-export default Queue
+   

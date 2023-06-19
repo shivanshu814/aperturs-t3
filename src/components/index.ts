@@ -1,14 +1,15 @@
-import SideBarButton from "./sidebar/button";
-import CreateCollapse from "./sidebar/createCollapse";
-import Profile from "./sidebar/profile";
-import CreateButton from "./CreateContent/button";
-import TweetEntry from "./CreateContent/TweetEntry";
+
+import CreateButton from "./dashboard/CreateContent/button";
+import TweetEntry from "./dashboard/CreateContent/TweetEntry";
 import Layout from "./Layout";
 import ProfileHeader from "./profile/header";
 import ConnectSocials from "./profile/ConnectSocials";
 import DraftPage from "./drafts/draft";
+import SideBar from "./layouts/sidebar/sidebar";
+import ContentPage from "./dashboard/ContentPage";
+import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
+import SocialTabs from "./post/tabs/socialtabs";
 
 
-export { SideBarButton, CreateCollapse,
-     Profile,CreateButton,TweetEntry,Layout,
-     ProfileHeader,ConnectSocials,DraftPage };
+export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,
+     ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };

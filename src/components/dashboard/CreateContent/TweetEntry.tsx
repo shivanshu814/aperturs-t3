@@ -43,7 +43,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
   const { mutateAsync: makeTweet } = api.tweet.makeTweet.useMutation();
   const { mutateAsync: makeSchedule } = api.tweet.scheduleTweets.useMutation();
   const onSchedule = async () => {
-     await handleTweet();
+    await handleTweet();
     console.log("schedule", schudule);
     const tws = content.map((value) => {
       if (value.content === undefined) return;
@@ -56,7 +56,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
     //   });
     // }
   };
-  const  handleTweet = async () => {
+  const handleTweet = async () => {
     const newContent = tweets.map((tweet, index) => {
       const textArea = textAreaRefs.current[index];
       const text = textArea?.value;
@@ -91,11 +91,12 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
         <div className="flex justify-end">
           <div>
             <input
-              className="mr-1 bg-transparent focus:outline-none"
+              className="mr-1 rounded border border-gray-300 bg-transparent p-2 focus:outline-none"
               value={schudule}
               onChange={(event) => setSchudule(event.target.value)}
               type="datetime-local"
             />
+
             <button
               className="btn-primary btn mt-2 rounded-lg px-4 py-2 text-white"
               style={{
@@ -106,7 +107,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
             >
               Schedule
             </button>
-            <div className="dropdown-top  dropdown-end dropdown-hover dropdown">
+            <div className="dropdown  dropdown-top dropdown-end dropdown-hover">
               <label
                 tabIndex={0}
                 className="btn-primary btn mt-2 border-0 border-l-2 border-secondary px-2 py-1 text-white"
@@ -123,7 +124,7 @@ const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
               >
                 <li
                   onClick={async () => {
-                     handleTweet();
+                    handleTweet();
                     console.log({ content });
                     console.log("HII");
                     content.forEach(async (c) => {

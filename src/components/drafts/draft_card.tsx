@@ -78,7 +78,6 @@ const DraftPopUp: React.FC<DraftPopUpProps> = ({postId}) => {
           <h3 className="text-lg flex justify-start font-bold">
             Edit Draft
             with id: {postId}
-            
           </h3>
           <TweetEntry postId={postId}/>
         </label>
