@@ -7,7 +7,8 @@ import ConnectSocials from "./profile/ConnectSocials";
 import DraftPage from "./drafts/draft";
 import SideBar from "./layouts/sidebar/sidebar";
 import ContentPage from "./dashboard/ContentPage";
+import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
 
 
 export {CreateButton,TweetEntry,Layout,SideBar,
-     ProfileHeader,ConnectSocials,DraftPage,ContentPage };
+     ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };

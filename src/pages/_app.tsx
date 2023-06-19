@@ -8,6 +8,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import "~/styles/calendar.css"
 import { ClerkProvider } from "@clerk/nextjs";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
