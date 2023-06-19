@@ -1,18 +1,53 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Typography,
-  List,
-  Alert,
-  IconButton,
-} from "@material-tailwind/react";
+import {Card,Typography,List,IconButton,} from "@material-tailwind/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CubeTransparentIcon, Bars2Icon } from "@heroicons/react/24/outline";
 import BottomMenu from "./bottomMenu";
 import AccordianMenu from "./accordianMenu";
+import UpgradeAlert from "./alert";
+import { MdSpaceDashboard } from "react-icons/md";
+import {ChevronRightIcon,Bars2Icon} from "@heroicons/react/24/outline";
+import { BsFileCodeFill } from "react-icons/bs";
+
+
+
+const AccordanceMenu = [
+  {
+    open: 1,
+    text: "Dashboard",
+    icon: <MdSpaceDashboard className="h-5 w-5" />,
+    items: [
+      {
+        subText: "Create",
+        subIcon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
+        url: "/dashboard",
+      },
+      {
+        subText: "Queue",
+        url: "/queue",
+      },
+      {
+        subText: "Drafts",
+        url: "/drafts",
+      },
+    ],
+  },
+
+  {
+    open: 2,
+    text: "Projects",
+    icon: <BsFileCodeFill className="h-5 w-5" />,
+    items: [
+      {
+        subText: "Create",
+        subIcon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
+        url: "/create",
+      },
+    ],
+  },
+];
+
 
 export default function SideBar() {
-  const [openAlert, setOpenAlert] = useState(true);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
@@ -24,7 +59,7 @@ export default function SideBar() {
   }, []);
 
   return (
-    <Card className="lg:sticky lg:left-4 mt-2 lg:h-[calc(100vh-2rem)] lg:max-w-[18rem] w-full bg-neutral p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="lg:sticky lg:left-4 mt-2 lg:min-h-[calc(100vh-2rem)] lg:max-w-[18rem] w-full bg-neutral p-4 shadow-xl shadow-blue-gray-900/5">
       <div className="mb-2 flex items-center gap-4 p-4">
         <img src="/logo.svg" alt="brand" className="h-8 w-8" />
         <Typography variant="h5" color="blue-gray">
@@ -42,13 +77,11 @@ export default function SideBar() {
       </div>
       <div className="hidden lg:block">
       <List>
-              <AccordianMenu />
+              <AccordianMenu list={AccordanceMenu}/>
               <hr className="my-2 border-blue-gray-50" />
               <BottomMenu />
-            </List>
+      </List>
       </div>
-      
-
       <AnimatePresence>
         {isNavOpen && (
           <motion.div
@@ -59,41 +92,14 @@ export default function SideBar() {
             className="overflow-scroll"
           >
             <List>
-              <AccordianMenu />
+              <AccordianMenu list={AccordanceMenu}/>
               <hr className="my-2 border-blue-gray-50" />
               <BottomMenu />
             </List>
           </motion.div>
         )}
       </AnimatePresence>
-      <Alert
-        open={openAlert}
-        className="mt-auto hidden lg:block"
-        onClose={() => setOpenAlert(false)}
-      >
-        <CubeTransparentIcon className="mb-4 h-12 w-12" />
-        <Typography variant="h6" className="mb-1">
-          Upgrade to PRO
-        </Typography>
-        <Typography variant="small" className="font-normal opacity-80">
-          Upgrade to Aperturs PRO and get even more advanced features and
-          premium.
-        </Typography>
-        <div className="mt-4 flex gap-3">
-          <Typography
-            as="a"
-            href="#"
-            variant="small"
-            className="font-medium opacity-80"
-            onClick={() => setOpenAlert(false)}
-          >
-            Dismiss
-          </Typography>
-          <Typography as="a" href="#" variant="small" className="font-medium">
-            Upgrade Now
-          </Typography>
-        </div>
-      </Alert>
+      <UpgradeAlert />
     </Card>
   );
 }

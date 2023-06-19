@@ -1,15 +1,13 @@
 import React, { ReactElement } from "react";
 import { Layout } from "~/components";
-import { ContentPage, Sidebar } from "~/container";
+import { ContentPage } from "~/components";
 
 
 const Dashboard = () => {
 
   return (
 
-      <div className="relative flex">
         <ContentPage />
-      </div>
 
   );
 

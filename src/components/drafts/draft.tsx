@@ -3,12 +3,12 @@ import {BsFillCalendarFill} from 'react-icons/bs'
 import {IoPencilSharp} from 'react-icons/io5'
 import {CreateButton} from '~/components'
 import DraftCard from "./draft_card";
+import PostCard from "./darfCard";
 
 
 
 const DraftPage = () => {
   return (
-    <div className="w-full m-12">
       <div className="w-full flex flex-col">
         <div className="flex justify-between">
         <h2 className="text-2xl font-bold">Draft</h2>
@@ -20,16 +20,17 @@ const DraftPage = () => {
             </button>
         </div>
         </div>
-        <div className="flex gap-8 mt-4">
-        <DraftCard postId='1'/>
-        <DraftCard postId='2'/>
-        <DraftCard postId='3'/>
-        <DraftCard postId='4'/>
+        <div className='grid xl:grid-cols-3 sm:grid-cols-2 grid-col-1 gap-6
+        mt-4
+        '>
+        <PostCard  id={1}/>
+        <PostCard  id={2}/>
+        <PostCard  id={3}/>
+        
         </div>
         
         
       </div>
-    </div>
   );
 };
 

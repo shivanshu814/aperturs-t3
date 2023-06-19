@@ -53,7 +53,28 @@ const AccordanceMenu = [
   },
 ];
 
-export default function AccordionMenu() {
+interface AccordanceProps {
+  open: number;
+  text: string;
+  icon: React.ReactNode;
+  items: {
+    subText: string;
+    subIcon?: React.ReactNode;
+    url: string;
+  }[];
+}
+
+interface MenuProps {
+  list: AccordanceProps[];
+}
+
+
+
+export default function AccordionMenu(props: MenuProps) {
+
+  const { list } = props;
+
+
   const [openItems, setOpenItems] = React.useState<number[]>([1, 2]);
   const router = useRouter();
 
@@ -71,7 +92,7 @@ export default function AccordionMenu() {
 
   return (
     <div>
-      {AccordanceMenu.map((item, index) => (
+      {list.map((item, index) => (
         <Accordion
           open={openItems.includes(item.open)}
           icon={
@@ -98,7 +119,7 @@ export default function AccordionMenu() {
             </AccordionHeader>
           </ListItem>
           <AccordionBody className="py-1">
-            <List className="p-0">
+            <List className="p-0" key={index}>
               {item.items.map((subItem, subIndex) => (
                 <Link href={subItem.url} key={subIndex}>
                   <ListItem
@@ -107,8 +128,8 @@ export default function AccordionMenu() {
                       "!bg-primary !text-white !shadow-sm hover:bg-primary hover:text-white"
                     }`}
                   >
-                    <ListItemPrefix>{subItem.icon ? subItem.icon :  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />}</ListItemPrefix>
-                    {subItem.text }
+                    <ListItemPrefix>{subItem.subIcon ? subItem.subIcon :  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />}</ListItemPrefix>
+                    {subItem.subText }
                   </ListItem>
                 </Link>
               ))}
