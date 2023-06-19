@@ -17,23 +17,39 @@ const AccordanceMenu = [
     icon: <MdSpaceDashboard className="h-5 w-5" />,
     items: [
       {
-        subText: "Create",
+        subText: "Home",
         subIcon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
         url: "/dashboard",
+      },
+      {
+        subText: "New Post",
+        url: "/post",
       },
       {
         subText: "Queue",
         url: "/queue",
       },
+      
+    ],
+  },
+  {
+    open: 2,
+    text: "Content",
+    icon: <BsFileCodeFill className="h-5 w-5" />,
+    items: [
       {
         subText: "Drafts",
         url: "/drafts",
       },
+      {
+        subText: "Ideas",
+        url: "/ideas",
+      }
     ],
   },
 
   {
-    open: 2,
+    open: 3,
     text: "Projects",
     icon: <BsFileCodeFill className="h-5 w-5" />,
     items: [
@@ -76,7 +92,7 @@ export default function SideBar() {
       </IconButton>
       </div>
       <div className="hidden lg:block">
-      <List>
+      <List >
               <AccordianMenu list={AccordanceMenu}/>
               <hr className="my-2 border-blue-gray-50" />
               <BottomMenu />

@@ -1,15 +1,24 @@
 
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Layout } from '~/components'
 
 const IdeasPage = () => {
 
 
   return (
-   <Layout>
-    
-   </Layout>
+    <div>
+      
+    </div>
   )
 }
+
+IdeasPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
+  )
+}
+ 
 
 export default IdeasPage

@@ -18,40 +18,7 @@ import Link from "next/link";
 import { MdSpaceDashboard } from "react-icons/md";
 import { BsFileCodeFill } from "react-icons/bs";
 
-const AccordanceMenu = [
-  {
-    open: 1,
-    text: "Dashboard",
-    icon: <MdSpaceDashboard className="h-5 w-5" />,
-    items: [
-      {
-        text: "Create",
-        icon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
-        url: "/dashboard",
-      },
-      {
-        text: "Queue",
-        url: "/queue",
-      },
-      {
-        text: "Drafts",
-        url: "/drafts",
-      },
-    ],
-  },
-  {
-    open: 2,
-    text: "Projects",
-    icon: <BsFileCodeFill className="h-5 w-5" />,
-    items: [
-      {
-        text: "Create",
-        icon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
-        url: "/create",
-      },
-    ],
-  },
-];
+
 
 interface AccordanceProps {
   open: number;
@@ -105,7 +72,7 @@ export default function AccordionMenu(props: MenuProps) {
           }
           key={index}
         >
-          <ListItem className="p-0" selected={openItems.includes(item.open)}>
+          <ListItem key={item.open} className="p-0" selected={openItems.includes(item.open)}>
             <AccordionHeader
               onClick={() => handleOpen(item.open)}
               className="border-b-0 p-3"
@@ -119,7 +86,7 @@ export default function AccordionMenu(props: MenuProps) {
             </AccordionHeader>
           </ListItem>
           <AccordionBody className="py-1">
-            <List className="p-0" key={index}>
+            <List className="p-0">
               {item.items.map((subItem, subIndex) => (
                 <Link href={subItem.url} key={subIndex}>
                   <ListItem
