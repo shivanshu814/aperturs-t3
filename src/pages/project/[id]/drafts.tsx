@@ -21,10 +21,8 @@ const DraftPage = () => {
         <DraftCard  id={1}/>
         <DraftCard  id={2}/>
         <DraftCard  id={3}/>
-        
         </div>
-        
-        
+    
       </div>
   );
 };
