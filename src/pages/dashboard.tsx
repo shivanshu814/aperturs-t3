@@ -6,17 +6,20 @@ import { ContentPage } from "~/components";
 const Dashboard = () => {
 
   return (
-
-        <ContentPage />
-
-  );
+  
+    <ContentPage />
+  
+    );
 
 };
 
 Dashboard.getLayout = function getLayout(page: ReactElement) {
   return (
-    <Layout>
+    <Layout> 
+
       {page}
+
+      
     </Layout>
   )
 }

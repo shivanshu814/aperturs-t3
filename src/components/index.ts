@@ -9,7 +9,10 @@ import SideBar from "./layouts/sidebar/sidebar";
 import ContentPage from "./dashboard/ContentPage";
 import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
 import SocialTabs from "./post/tabs/socialtabs";
+import GithubCard from "./projects/projectCard";
+import NewRepoFormModal  from "./projects/newRepoModal";
+import ProjectLayout from "./layouts/projectnavbar/projectLayout";
+import CommitsTable from "./projects/project/commits/commitsTable";
 
-
-export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,
+export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,NewRepoFormModal,ProjectLayout,CommitsTable,
      ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };
