@@ -14,9 +14,10 @@ import NewRepoFormModal  from "./projects/newRepoModal";
 import ProjectLayout from "./layouts/projectnavbar/projectLayout";
 import CommitsTable from "./projects/project/commits/commitsTable";
 import QuestionCard from "./projects/project/context/questionCard";
+import DraftCard from "./drafts/darfCard";
 
 export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,NewRepoFormModal,ProjectLayout,CommitsTable,
-     ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard,
+     ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard,DraftCard,
      QuestionCard
 
 };

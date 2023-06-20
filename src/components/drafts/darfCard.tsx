@@ -11,7 +11,7 @@ import { IoPencilSharp } from "react-icons/io5";
 import { TbTrashFilled } from "react-icons/tb";
 
 
-export default function PostCard({ id  }: { id: number}) {
+export default function DraftCard({ id  }: { id: number}) {
 
     const router = useRouter();
   return (
