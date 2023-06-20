@@ -9,7 +9,7 @@ const UpgradeAlert = () => {
   return (
       <Alert
         open={openAlert}
-        className="mt-auto hidden lg:block"
+        className="mt-auto bg-primary hidden lg:block"
         onClose={() => setOpenAlert(false)}
       >
         <TbAlertTriangleFilled className="mb-4 h-12 w-12" />
