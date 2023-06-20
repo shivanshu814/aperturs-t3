@@ -6,7 +6,7 @@ import AccordianMenu from "./accordianMenu";
 import UpgradeAlert from "./alert";
 import { MdSpaceDashboard } from "react-icons/md";
 import {ChevronRightIcon,Bars2Icon} from "@heroicons/react/24/outline";
-import { BsFileCodeFill } from "react-icons/bs";
+import { BsFileCodeFill, BsFillClipboardDataFill } from "react-icons/bs";
 
 
 
@@ -35,7 +35,7 @@ const AccordanceMenu = [
   {
     open: 2,
     text: "Content",
-    icon: <BsFileCodeFill className="h-5 w-5" />,
+    icon: <BsFillClipboardDataFill className="h-5 w-5" />,
     items: [
       {
         subText: "Drafts",
@@ -54,9 +54,9 @@ const AccordanceMenu = [
     icon: <BsFileCodeFill className="h-5 w-5" />,
     items: [
       {
-        subText: "Create",
+        subText: "Connected Projects",
         subIcon: <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />,
-        url: "/create",
+        url: "/projects",
       },
     ],
   },

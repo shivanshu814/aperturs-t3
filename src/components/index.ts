@@ -9,7 +9,7 @@ import SideBar from "./layouts/sidebar/sidebar";
 import ContentPage from "./dashboard/ContentPage";
 import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
 import SocialTabs from "./post/tabs/socialtabs";
+import GithubCard from "./projects/projectCard";
 
-
-export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,
+export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,
      ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };
