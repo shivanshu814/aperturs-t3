@@ -10,6 +10,7 @@ import ContentPage from "./dashboard/ContentPage";
 import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
 import SocialTabs from "./post/tabs/socialtabs";
 import GithubCard from "./projects/projectCard";
+import NewRepoFormModal  from "./projects/newRepoModal";
 
-export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,
+export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,NewRepoFormModal,
      ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };

@@ -30,7 +30,7 @@ const RepoOption = () => {
   );
 };
 
-export const NewRepoFormModal = () => {
+  const NewRepoFormModal = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -71,11 +71,11 @@ export const NewRepoFormModal = () => {
           </>
         </DialogBody>
         <DialogFooter>
-          <button onClick={handleOpen} className="mr-1">
+          <button className="btn mr-1 text-white btn-error" onClick={handleOpen}>
             <span>Cancel</span>
           </button>
 
-          <button onClick={onConfirm}>
+          <button className="btn btn-success ml-1" onClick={onConfirm}>
             <span>Confirm</span>
           </button>
         </DialogFooter>
@@ -83,3 +83,5 @@ export const NewRepoFormModal = () => {
     </>
   );
 };
+
+export default NewRepoFormModal;

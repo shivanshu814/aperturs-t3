@@ -27,7 +27,7 @@ module.exports =   withMT({
                    
           "info": "#3ABFF8",
                    
-          "success": "#36D399",
+          "success": "#22c55e",
                    
           "warning": "#ffa800",
                    
