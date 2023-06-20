@@ -29,7 +29,7 @@ const MyApp: AppType<{ session: Session | null }> = ({Component,pageProps: { ses
     <SessionProvider session={session}>
       <ClerkProvider {...pageProps}>
       <ThemeProvider>
-        <Toaster position="bottom-center" reverseOrder={false} />
+        <Toaster position="top-left" reverseOrder={false} />
        { getLayout(<Component {...pageProps} />) }
       </ThemeProvider>
       </ClerkProvider>
