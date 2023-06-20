@@ -1,15 +1,40 @@
-import React, { ReactElement } from 'react'
-import { Layout, ProjectLayout } from '~/components'
+import React, { ReactElement, useState } from 'react'
+import { CommitsTable, Layout, ProjectLayout } from '~/components'
 
-function Commits() {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+export interface TableRow {
+    id: number;
+    message: string;
+    author: string;
+    date: string;
+  }
+  
+  const CommitsPage = () => {
+   
+  
+    const [commits, setCommits] = useState([])
+    const [tableRows, setTableRows] = useState([
+        {
+            id: 1,
+            message: "Initial commit",
+            author: "John Doe",
+            date: "2021-08-01",
+        },
+        {
+            id: 2,
+            message: "Add login page",
+            author: "John Doe",
+            date: "2021-08-02",
+        }
+    ] as TableRow[])
+    
+    return (
+      <div className=''>
+        <CommitsTable rows={tableRows} />
+      </div>
+    )
+  }
 
-Commits.getLayout = function getLayout(page: ReactElement) {
+CommitsPage.getLayout = function getLayout(page: ReactElement) {
     return (
       <Layout>
         <ProjectLayout>
@@ -19,4 +44,4 @@ Commits.getLayout = function getLayout(page: ReactElement) {
     )
   }
 
-export default Commits
+export default CommitsPage
