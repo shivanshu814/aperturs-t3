@@ -11,6 +11,7 @@ import LinkedinPostCard from "./post/linkedin/LinkedinPostCard";
 import SocialTabs from "./post/tabs/socialtabs";
 import GithubCard from "./projects/projectCard";
 import NewRepoFormModal  from "./projects/newRepoModal";
+import ProjectLayout from "./layouts/projectnavbar/projectLayout";
 
-export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,NewRepoFormModal,
+export {CreateButton,TweetEntry,Layout,SideBar,SocialTabs,GithubCard,NewRepoFormModal,ProjectLayout,
      ProfileHeader,ConnectSocials,DraftPage,ContentPage,LinkedinPostCard };
