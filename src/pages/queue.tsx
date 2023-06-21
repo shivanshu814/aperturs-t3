@@ -4,7 +4,9 @@ import { QueueNav } from '~/components/queue/queue'
 
 function Queue() {
   return (
+    <div className='flex justify-center'>
     <QueueNav />
+    </div>
   )
 }
 

@@ -62,62 +62,76 @@ export const QueueNav = () => {
   const [filteredQueue, setFilteredQueue] = useState<IDay[]>([]);
 
 
+
+
   useEffect(() => {
     const currentDate = new Date();
-    const currentTime = currentDate.getHours() + ":" + currentDate.getMinutes();
-    const startDay = currentDate.getDay();
+    const currentTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const currentDayIndex = currentDate.getDay();
   
-    const newFilteredQueue: IDay[] = queue
-      .map((queueDay) => {
-        const dayIndex = Object.values(dayMap).indexOf(queueDay.day);
-        if (dayIndex === -1) {
-          return null;
+    const availableSlots: IDay[] = [];
+    let dayCount = 0;
+  
+    while (availableSlots.length < 7) {
+      const nextDayIndex = (currentDayIndex + dayCount) % 7;
+      const nextDay = dayMap[nextDayIndex];
+  
+      const queueDay = queue.find((day) => day.day === nextDay);
+      if (queueDay) {
+        const availablePosts = filterTodayPosts(queueDay.posts, (dayCount === 0) ? currentTime : '00:00');
+        if (availablePosts.length > 0) {
+          const nextDate = new Date(currentDate);
+          nextDate.setDate(currentDate.getDate() + dayCount);
+          const formattedDate = nextDate.toLocaleDateString();
+  
+          const dayInfo: IDay = {
+            date: formattedDate,
+            day: (dayCount === 0) ? `Today (${formattedDate})` : (dayCount === 1) ? `Tomorrow (${formattedDate})` : `${queueDay.day} (${formattedDate})`,
+            posts: availablePosts,
+          };
+  
+          availableSlots.push(dayInfo);
         }
+      }
   
-        const day = new Date(currentDate);
-        day.setDate(day.getDate() + dayIndex - startDay);
+      dayCount++;
+    }
   
-        if (dayIndex === startDay) {
-          return {
-            ...queueDay,
-            date: day.toLocaleDateString(),
-            day: "Today",
-          };
-        } else if (dayIndex === (startDay + 1) % 7) {
-          return {
-            ...queueDay,
-            date: day.toLocaleDateString(),
-            day: "Tomorrow",
-          };
-        } else {
-          return {
-            ...queueDay,
-            date: day.toLocaleDateString(),
-          };
-        }
-      })
-      .filter((day) => day !== null) as IDay[];
-  
-    setFilteredQueue(newFilteredQueue);
+    setFilteredQueue(availableSlots);
   }, [queue]);
+  
+  
   
   
   
 
   return (
-    <>
+    <div className="max-w-screen-lg">
       {/* ... existing JSX */}
-      <div className="queue">
+      <h2 className="text-2xl my-2 font-bold">Queue</h2>
+      <Alert
+        className="my-4"
+        color="amber"
+        icon={<InformationCircleIcon strokeWidth={2} className="h-6 w-6" />}
+      >
+        You are currently on the free plan. You can schedule tweets and threads
+        up to 2 days ahead.Grab a Aperturs subscription to unlock unlimited
+        scheduling, autoplugs, recurrent promotional posts and much more.
+      </Alert>
+      <div className="my-4">
         {filteredQueue.map((dayInfo) => (
-          <div key={dayInfo.date} className="day">
-            <h3>{dayInfo.day}</h3>
+          <div key={dayInfo.date} className="">
+            <h3 className="font-bold text-lg pl-1">{dayInfo.day}</h3>
+            <div className="grid grid-cols-2 gap-2 my-2 ">
             {dayInfo.posts.map((post, index) => (
               <QueueCard key={index} time={post.time} type={post.type} />
             ))}
+            </div>
+
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

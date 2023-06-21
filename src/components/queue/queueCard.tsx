@@ -9,9 +9,9 @@ interface CardProps {
 
 const QueueCard: React.FC<CardProps> = ({ time, type }) => {
   return (
-    <Card className="flex p-4">
+    <Card shadow={false} className="flex font-bold bg-secondary group shadow-mdc flex-row py-6 px-5 ">
       <div className="time">{time}</div>
-      <div className="type">{type}</div>
+      <div className="hidden group-hover:flex ease-in-out mx-5">{type}</div>
     </Card>
   );
 };
