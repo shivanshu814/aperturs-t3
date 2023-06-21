@@ -12,11 +12,9 @@ type Content = {
   content?: string;
 };
 
-type TweetEntryProps = {
-  postId: string;
-};
 
-const TweetEntry: React.FC<TweetEntryProps> = ({ postId }) => {
+
+const TweetEntry = () => {
   const [tweets, setTweets] = useState<Tweet[]>([
     { id: 0 },
     // { id: 0, content: "Hello World" },

@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react'
-import { Layout, LinkedinPostCard, SocialTabs } from '~/components'
+import { Layout, PostView } from '~/components'
 
 export default function Post() {
   return (
           <div className="container mx-auto p-4">
-      <SocialTabs />
+      <PostView />
     </div>
   )
 }

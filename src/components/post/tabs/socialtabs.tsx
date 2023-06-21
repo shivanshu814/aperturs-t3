@@ -15,6 +15,7 @@ import LinkedinPostCard from "../linkedin/LinkedinPostCard";
 import TweetEntry from "~/components/dashboard/CreateContent/TweetEntry";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
+import TweetPost from "../tweets/tweetsPost";
  
 export default function SocialTabs() {
 
@@ -37,7 +38,7 @@ export default function SocialTabs() {
       </TabsHeader>
       <TabsBody>
           <TabPanel value="twitter">
-          <TweetEntry postId={"1"}/>
+          <TweetPost />
           </TabPanel>
           <TabPanel value="linkedin">
             <LinkedinPostCard />
