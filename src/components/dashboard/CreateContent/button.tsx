@@ -40,7 +40,7 @@ const PopUp = () => {
             ✕
           </label>
           <h3 className="text-lg font-bold">New Post</h3>
-          <TweetEntry postId=''/>
+          <TweetEntry />
         </div>
       </div>
     </div>

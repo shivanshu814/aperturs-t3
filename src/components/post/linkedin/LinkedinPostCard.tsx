@@ -1,21 +1,44 @@
 'use client'
 
 import { Avatar } from '@material-tailwind/react'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import LinkedInPostCreation from './textarea'
-import Picker from '~/components/custom/datepicker/picker';
+import { PostContext } from '../postview';
+
+type Tweet = {
+  id: number;
+  text: string;
+};
+
+function convertTweetsToPlaintext(tweets: Tweet[]): string {
+  let plaintext = "";
+
+  for (let i = 0; i < tweets.length; i++) {
+    const tweet = tweets[i];
+
+      plaintext += tweet?.text + "\n\n";
+    
+  }
+
+  return plaintext;
+}
+
+
 
 
 function LinkedinPostCard() {
-  const [content, setContent] = useState('');
-    const handlePostSubmit = (content: string) => {
-        console.log("Post content:", content);
-        alert("Post content: " + content);
-      };
-      const handleDate = (date: Date, time: Date) => {
-        console.log('Selected Date:', date);
-        console.log('Selected Time:', time);
-      };
+
+  const {setLinkedinPost,linkedinPost,sync,tweets } = useContext(PostContext)
+
+
+  useEffect(() => {
+    console.log("from linkedin component", convertTweetsToPlaintext(tweets));
+    if (sync) {
+      const newLinkedinContent = convertTweetsToPlaintext(tweets);
+      setLinkedinPost(newLinkedinContent);
+    }
+  }, [sync, tweets, setLinkedinPost]);
+
 
   return (
       <div className="bg-white rounded-lg w-full shadow-md p-4">
@@ -33,16 +56,11 @@ function LinkedinPostCard() {
             </div>
         </div>
         <LinkedInPostCreation 
-        content={content}
-        onContentChange={setContent}
+        content={linkedinPost}
+        onContentChange={setLinkedinPost}
+        sync={sync}
         />
         <div>
-        <Picker />
-        <button className='btn btn-primary px-8 text-white'
-        onClick={() => handlePostSubmit(content)}
-        >
-          Post
-        </button>
         </div>
 
       </div>
