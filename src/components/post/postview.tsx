@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import SocialTabs from "./tabs/socialtabs";
 import Picker from "../custom/datepicker/picker";
 import { Switch } from "@material-tailwind/react";
+import { toast } from "react-hot-toast";
 
 type Tweet = {
   id: number;
@@ -40,8 +41,14 @@ function PostView() {
   const handlePublish = () => {
     console.log("tweets", tweets);
     console.log("linkedinPost", linkedinPost);
+    let tweetss = ""
+    for(let i=0;i<tweets.length;i++){
+      let tweetid = tweets[i]?.id
+      let tweettext = tweets[i]?.text
+      tweetss += `id: ${tweetid} text: ${tweettext} \n`
+    }
+    toast(`tweets: ${tweetss} \n linkedinPost: ${linkedinPost}`)
   }
-
   return (
     <PostContext.Provider
       value={{
