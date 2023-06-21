@@ -79,7 +79,7 @@ const DraftPopUp: React.FC<DraftPopUpProps> = ({postId}) => {
             Edit Draft
             with id: {postId}
           </h3>
-          <TweetEntry postId={postId}/>
+          <TweetEntry />
         </label>
       </label>
     </div>
