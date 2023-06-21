@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react'
 import { Layout } from '~/components'
+import { QueueNav } from '~/components/queue/queue'
 
 function Queue() {
   return (
-    <div>
-      
+    <div className='flex justify-center'>
+    <QueueNav />
     </div>
   )
 }
