@@ -28,6 +28,6 @@ Projects.getLayout = function getLayout(page: ReactElement) {
         {page}
       </Layout>
     )
-  }
+}
 
 export default Projects;

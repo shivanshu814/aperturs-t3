@@ -14,67 +14,20 @@ datasource db {
     url      = env("DATABASE_URL")
     relationMode = "prisma"
 }
-enum Role{
-    ADMIN
-    USER
-}
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
 
-// Necessary for Next auth
-model Account {
-    id                String  @id @default(cuid())
-    userId            String  
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
-    @@index([userId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@index([userId])
-}
-
-model Twitter {
-    id String @unique
-    bearerToken String
-}
-model Draft {
-    userId String @unique
-    post String
-}
-
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    image         String?
-    password          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    role          Role @default(USER)
-    accounts      Account[]
-    sessions      Session[]
-}
+// model User {
+//     id            String    @id @default(cuid())
+//     name          String?
+//     image         String?
+//     password          String?
+//     email         String?   @unique
+//     emailVerified DateTime?
+//     role          Role @default(USER)
+//     accounts      Account[]
+//     sessions      Session[]
+// }
 
 model VerificationToken {
     identifier String
@@ -82,4 +35,178 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+
+
+
+
+model User {
+  id           Int      @id @default(autoincrement())
+  clerkUserId  String   @unique
+  posts        Post[]
+  ideas        Idea[]
+  transactions Transaction[]
+  githubTokens  GithubToken[]
+  linkedInTokens  LinkedInToken[]
+  twitterTokens  TwitterToken[]
+  subscritpion Subscription? 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+
+
+model TwitterToken{
+  id Int @id @default(autoincrement())
+  usesr User @relation(fields: [userId], references: [id])
+  userId Int @unique
+  client_id String
+  client_secret String
+}
+
+model GithubToken {
+    id        Int      @id @default(autoincrement())
+    access_token     String   @unique
+    refresh_token    String?   @unique
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    expires_in DateTime?
+    refresh_token_expires_in DateTime?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+model LinkedInToken {
+    id        Int      @id @default(autoincrement())
+    access_token     String   @unique
+    refresh_token    String?   @unique
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int @unique
+    expires_in DateTime?
+    refresh_token_expires_in DateTime?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum SubscriptionType {
+   FREE
+}
+
+model Subscription {
+    id               String               @id @default(cuid())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int @unique
+    customerUserId   String
+    transaction      Transaction          @relation(fields: [transactionId], references: [id])
+    transactionId    String
+    type             SubscriptionType
+
+    @@index([userId])
+}
+   
+
+model Transaction {
+    id               String            @id @default(cuid())
+     user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+    amount           Int
+    Subscription     Subscription[]
+    status           TransactionStatus @default(PENDING)
+    paymentDetails   Json?
+    type             TransactionType
+    refundStatus     RefundStatus?     @default(NOT_APPLICABLE)
+    paymentGatewayId String
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  content     String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  platform    Platform
+  status      Status
+  scheduledAt DateTime?
+  tweetThread TweetThread[]
+  imgUrls     Json
+  poll        Poll?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model Idea {
+  id        Int      @id @default(autoincrement())
+  content   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model TweetThread {
+  id      Int    @id @default(autoincrement())
+  postId  Int
+  post    Post   @relation(fields: [postId], references: [id])
+  content String
+
+  @@index([postId])
+}
+
+model Poll {
+  id      Int    @id @default(autoincrement())
+  postId  Int @unique
+  post    Post   @relation(fields: [postId], references: [id])
+  options Json
+}
+
+model Queue {
+  id      Int        @id @default(autoincrement())
+  day     String
+  items   QueueItem[]
+}
+
+model QueueItem {
+  id       Int    @id @default(autoincrement())
+  time     String
+  type     String
+  queue    Queue  @relation(fields: [queueId], references: [id])
+  queueId  Int
+
+  @@index([queueId])
+}
+
+enum Platform {
+  TWITTER
+  LINKEDIN
+  INSTAGRAM
+  LENS_PROTOCOL
+  FARCASTER
+}
+
+enum TransactionStatus {
+    PENDING
+    FAILED
+    SUCCESSFUL
+}
+
+enum TransactionType {
+    SUBSCRIPTION_PURCHASE
+    REFUND
+}
+
+enum RefundStatus {
+    NOT_APPLICABLE
+    PENDING
+    PROCESSED
+}
+
+enum Status {
+  PUBLISHED
+  SCHEDULED
 }

@@ -14,7 +14,7 @@ export const PostContext = createContext({
   tweets: [
     {
       id: 1,
-      text: " ",
+      text: "",
     },
   ],
   setLinkedinPost: (content: string) => {},
