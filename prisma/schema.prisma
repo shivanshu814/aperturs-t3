@@ -39,8 +39,6 @@ model VerificationToken {
 
 
 
-
-
 model User {
   id           Int      @id @default(autoincrement())
   clerkUserId  String   @unique
