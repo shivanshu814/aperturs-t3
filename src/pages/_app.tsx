@@ -3,6 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@material-tailwind/react";
+import { Analytics } from '@vercel/analytics/react';
 
 
 import { api } from "~/utils/api";
@@ -31,6 +32,8 @@ const MyApp: AppType<{ session: Session | null }> = ({Component,pageProps: { ses
       <ThemeProvider>
         <Toaster position="top-left" reverseOrder={false} />
        { getLayout(<Component {...pageProps} />) }
+       <Analytics />
+
       </ThemeProvider>
       </ClerkProvider>
     </SessionProvider>
