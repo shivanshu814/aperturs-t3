@@ -38,7 +38,8 @@ const TweetEntry = () => {
     setTweets(newTweets);
     setContent((prevContent) => prevContent.filter((_, i) => i !== index));
   };
-
+  // const { mutateAsync: makeTweet } = api.tweet.makeTweet.useMutation();
+  // const { mutateAsync: makeSchedule } = api.tweet.scheduleTweets.useMutation();
   const onSchedule = async () => {
     await handleTweet();
     console.log("schedule", schudule);
@@ -124,7 +125,13 @@ const TweetEntry = () => {
                     handleTweet();
                     console.log({ content });
                     console.log("HII");
-                    
+                    content.forEach(async (c) => {
+                      if (c.content) {
+                        // await makeTweet({
+                        //   text: c.content,
+                        // });
+                      }
+                    });
                   }}
                 >
                   <a>Post Now</a>
@@ -176,9 +183,8 @@ const SingleTweet = React.forwardRef<HTMLTextAreaElement, SingleTweetProps>(
         />
         <div className="flex items-center justify-end">
           <span
-            className={`${
-              count > 0 ? "text-accent" : "text-red-600"
-            } mr-2 text-sm`}
+            className={`${count > 0 ? "text-accent" : "text-red-600"
+              } mr-2 text-sm`}
           >
             {count}
           </span>
