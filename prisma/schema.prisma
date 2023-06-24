@@ -95,8 +95,63 @@ model User {
   posts        Post[]
   drafts       Draft[]
   ideas        Idea[]
+  githubTokens  GithubToken?
+  linkedInTokens  LinkedInToken?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model GithubToken {
+    id        Int      @id @default(autoincrement())
+    access_token     String   @unique
+    refresh_token    String?   @unique
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    expires_in DateTime?
+    refresh_token_expires_in DateTime?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+model LinkedInToken {
+    id        Int      @id @default(autoincrement())
+    access_token     String   @unique
+    refresh_token    String?   @unique
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    expires_in DateTime?
+    refresh_token_expires_in DateTime?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum SubscriptionType {
+   FREE
+}
+
+model Subscription {
+    id               String               @id @default(cuid())
+    user             User                 @relation(fields: [customerUserId], references: [id])
+    customerUserId   String
+    transaction      Transaction          @relation(fields: [transactionId], references: [id])
+    transactionId    String
+    type             SubscriptionType
+}
+   
+
+model Transaction {
+    id               String            @id @default(cuid())
+    user             User              @relation(fields: [customerUserId], references: [id])
+    amount           Int
+    Subscription     Subscription[]
+    status           TransactionStatus @default(PENDING)
+    paymentDetails   Json?
+    type             TransactionType
+    refundStatus     RefundStatus?     @default(NOT_APPLICABLE)
+    paymentGatewayId String
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+    @@index([customerUserId])
+    @@index([customerId])
 }
 
 model Post {
@@ -157,6 +212,23 @@ enum Platform {
   INSTAGRAM
   LENS_PROTOCOL
   FARCASTER
+}
+
+enum TransactionStatus {
+    PENDING
+    FAILED
+    SUCCESSFUL
+}
+
+enum TransactionType {
+    SUBSCRIPTION_PURCHASE
+    REFUND
+}
+
+enum RefundStatus {
+    NOT_APPLICABLE
+    PENDING
+    PROCESSED
 }
 
 enum Status {
