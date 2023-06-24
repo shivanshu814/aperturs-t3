@@ -16,6 +16,7 @@ interface IDay {
     type: string;
   }[];
 }
+
 const queue = [
   {
     day: 'Monday',
@@ -43,7 +44,7 @@ const queue = [
     day: 'Wednesday',
     posts: [
       {
-        time: '18:15',
+        time: '23:15',
         type: 'instagram',
       },
     ]
@@ -58,10 +59,9 @@ function filterTodayPosts(posts: IPost[], currentTime: string): IPost[] {
   return posts.filter((post) => post.time >= currentTime);
 }
 
+
 export const QueueNav = () => {
   const [filteredQueue, setFilteredQueue] = useState<IDay[]>([]);
-
-
 
 
   useEffect(() => {
@@ -75,7 +75,6 @@ export const QueueNav = () => {
     while (availableSlots.length < 7) {
       const nextDayIndex = (currentDayIndex + dayCount) % 7;
       const nextDay = dayMap[nextDayIndex];
-  
       const queueDay = queue.find((day) => day.day === nextDay);
       if (queueDay) {
         const availablePosts = filterTodayPosts(queueDay.posts, (dayCount === 0) ? currentTime : '00:00');
@@ -83,13 +82,11 @@ export const QueueNav = () => {
           const nextDate = new Date(currentDate);
           nextDate.setDate(currentDate.getDate() + dayCount);
           const formattedDate = nextDate.toLocaleDateString();
-  
           const dayInfo: IDay = {
             date: formattedDate,
             day: (dayCount === 0) ? `Today (${formattedDate})` : (dayCount === 1) ? `Tomorrow (${formattedDate})` : `${queueDay.day} (${formattedDate})`,
             posts: availablePosts,
           };
-  
           availableSlots.push(dayInfo);
         }
       }

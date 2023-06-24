@@ -1,3 +1,4 @@
+'use server'
 import React, { ReactElement } from 'react'
 import { Layout,DraftPage } from '~/components'
 

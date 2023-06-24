@@ -30,7 +30,7 @@ const SingleTweet: React.FC<SingleTweetProps> = ({
       <textarea
         ref={textareaRef}
         className="block w-full min-h-[100px] resize-none  bg-transparent focus:outline-none"
-        value={text}
+        defaultValue={text}
         onChange={handleChange}
         placeholder="What's happening?"
       />
