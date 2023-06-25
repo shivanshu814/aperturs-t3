@@ -26,10 +26,13 @@ export default async function handler(
   let evt: Event | null = null;
   try {
     evt = wh.verify(payload, headers) as Event;
+    console.log(payload, headers)
+    console.log("evt", "verifying payload")
   } catch (_) {
-    return res.status(400).json({});
+    return res.status(400).json({
+        error: "Invalid webhook signature",
+    });
   }
-
   // Handle the webhook
   const eventType: EventType = evt.type;
   if (eventType === "user.created" || eventType === "user.updated") {
