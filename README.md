@@ -1,28 +1,55 @@
-# Create T3 App
+# Aperturs: Social Media Automation Software
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Introduction
+Aperturs is a social media automation software that simplifies the process of managing and posting content on various social media platforms. This README file provides an overview of the features and functionality offered by Aperturs.
 
-## What's next? How do I make an app with this?
+## Features
+Aperturs offers the following features:
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+1. Connecting to multiple social media platforms:
+   - Twitter
+   - LinkedIn
+   - Instagram
+   - Lens Protocol
+   - Farcaster
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+2. Single-click post to all platforms or edit posts individually:
+   - By default, users can post to all connected platforms with a single click.
+   - Users can also choose to edit posts separately for each platform, customizing the content, format, and style.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+3. AI assistant:
+   - Aperturs includes an AI assistant similar to GitHub Co-Pilot.
+   - The assistant provides inline assistance while writing custom commands and helps with tone, fluency, and other writing aspects.
 
-## Learn More
+4. Connect to GitHub and notes platforms:
+   - Users can connect their GitHub repositories to Aperturs and create posts based on commits and project information.
+   - Integration with notes platforms such as Notion, Evergreen, Google Docs, and Obsidian is supported.
+   - Users can create posts based on their notes, including book summaries, analysis, journal entries, and more.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+5. Mini website:
+   - Aperturs enables users to create mini websites with a simple address format (e.g., aperturs/username).
+   - These websites are similar to Linktree and allow users to add components such as links, headings, paragraphs, and more.
+   - Users can customize their websites using an editor.
+   - Additionally, Aperturs offers a blog feature that allows users to automatically create blog posts along with their social media posts.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+6. Basic Features:
+   - Drafts: Users can save posts as drafts before publishing them.
+   - Ideas: Aperturs provides a simple text editor for users to jot down ideas and notes.
+   - Scheduling posts: Users can schedule posts to be published at a specific time.
+   - Adding to queue: Users can add posts to a queue with preset times for maintaining a consistent posting frequency.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## First Beta Release (Expected Date: 22 - 25 June)
+The first beta release of Aperturs will include the following features:
 
-## How do I deploy this?
+1. Connecting to Twitter, LinkedIn, and Lens Protocol.
+2. Custom post editing for Twitter and LinkedIn.
+3. Integration with GitHub to generate posts based on commits and context.
+4. Optional integration with payments (or available in the pro version).
+5. Basic features like posting, scheduling, drafts, and queue management.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## First Stable Release (Expected Date: July 15 to 25)
+The first stable release of Aperturs will include the features mentioned above and the following additional feature:
+
+1. Instagram integration: Convert text to image and post to Instagram.
+2. Proper integration with payments.
+
