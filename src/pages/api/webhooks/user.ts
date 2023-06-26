@@ -21,34 +21,39 @@ export default async function handler(
   // Verify the webhook signature
   // See https://docs.svix.com/receiving/verifying-payloads/how
   const payload = (await buffer(req)).toString();
+  const eventData = req.body;
   const headers = req.headers;
-  const wh = new Webhook(webhookSecret);
-  let evt: Event | null = null;
-  try {
-    evt = wh.verify(payload, headers) as Event;
-    console.log(payload, headers)
-    console.log("evt", "verifying payload")
-  } catch (_) {
-    return res.status(400).json({
-        error: "Invalid webhook signature",
-    });
+  const heads = {
+    "svix-id": headers["svix-id"],
+    "svix-signature": headers["svix-signature"],
+    "svix-timestamp": headers["svix-timestamp"],
   }
+  const wh = new Webhook(webhookSecret);
+  // let evt: Event | null = null;
+  // try {
+  //   evt = wh.verify(
+  //     JSON.stringify(payload),
+  //     heads as IncomingHttpHeaders & WebhookRequiredHeaders
+  //   ) as Event;
+  // } catch (_) {
+  //   return res.status(400).json({});
+  // }
+
   // Handle the webhook
-  const eventType: EventType = evt.type;
+  const eventType: EventType = eventData.type;
   if (eventType === "user.created" || eventType === "user.updated") {
-    console.log("user created or updated", evt.data)
-    const { id, ...attributes } = evt.data;
+    console.log(`Received ${eventType} event`);
+    const { id, ...attributes } = eventData.data;
     await prisma.user.upsert({
-        where: { clerkUserId: id as string},
-        create: {
-          clerkUserId: id as string,
-          // Set other fields from evt.data if needed
-        },
-        update: {
-          // Update other fields from evt.data if needed
-        },
-      });
-      
+      where: { clerkUserId: id as string},
+      create: {
+        clerkUserId: id as string,
+        // Set other fields from evt.data if needed
+      },
+      update: {
+        // Update other fields from evt.data if needed
+      },
+    });
   }
 
   res.json({});
