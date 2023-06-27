@@ -1,74 +1,106 @@
-import { IncomingHttpHeaders } from "http";
+import type { User } from "@clerk/nextjs/api";
+import { Webhook } from "svix";
+import { headers } from "next/headers";
+import { env } from "~/env.mjs";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Webhook, WebhookRequiredHeaders } from "svix";
-import { buffer } from "micro";
+import { router } from "@trpc/server";
+import { appRouter } from "~/server/api/root";
+import { Prisma } from "@prisma/client";
 import { prisma } from "~/server/db";
+import cronJobServer from "~/server/cronjob";
 
-// Disable the bodyParser so we can access the raw
-// request body for verification.
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+type UnwantedKeys =
+  | "emailAddresses"
+  | "firstName"
+  | "lastName"
+  | "primaryEmailAddressId"
+  | "primaryPhoneNumberId"
+  | "phoneNumbers";
 
-const webhookSecret: string = process.env.WEBHOOK_SECRET || "";
-
-export default async function handler(
-  req: NextApiRequestWithSvixRequiredHeaders,
-  res: NextApiResponse
-) {
-  // Verify the webhook signature
-  // See https://docs.svix.com/receiving/verifying-payloads/how
-  const payload = (await buffer(req)).toString();
-  const eventData = req.body;
-  const headers = req.headers;
-  const heads = {
-    "svix-id": headers["svix-id"],
-    "svix-signature": headers["svix-signature"],
-    "svix-timestamp": headers["svix-timestamp"],
-  }
-  const wh = new Webhook(webhookSecret);
-  // let evt: Event | null = null;
-  // try {
-  //   evt = wh.verify(
-  //     JSON.stringify(payload),
-  //     heads as IncomingHttpHeaders & WebhookRequiredHeaders
-  //   ) as Event;
-  // } catch (_) {
-  //   return res.status(400).json({});
-  // }
-
-  // Handle the webhook
-  const eventType: EventType = eventData.type;
-  if (eventType === "user.created" || eventType === "user.updated") {
-    console.log(`Received ${eventType} event`);
-    const { id, ...attributes } = eventData.data;
-    await prisma.user.upsert({
-      where: { clerkUserId: id as string},
-      create: {
-        clerkUserId: id as string,
-        // Set other fields from evt.data if needed
-      },
-      update: {
-        // Update other fields from evt.data if needed
-      },
-    });
-  }
-
-  res.json({});
+interface UserInterface extends Omit<User, UnwantedKeys> {
+  email_addresses: {
+    email_address: string;
+    id: string;
+  }[];
+  primary_email_address_id: string;
+  first_name: string;
+  last_name: string;
+  primary_phone_number_id: string;
+  phone_numbers: {
+    phone_number: string;
+    id: string;
+  }[];
 }
 
-type NextApiRequestWithSvixRequiredHeaders = NextApiRequest & {
-  headers: IncomingHttpHeaders & WebhookRequiredHeaders;
-};
+const webhookSecret: string = env.WEBHOOK_SECRET || "";
 
-// Generic (and naive) way for the Clerk event
-// payload type.
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  // if (req.method !== "POST") {
+  //   return res.status(405).json({ error: "Method not allowed" });
+  // }
+  const payload = await req.body;
+
+  const payloadString = JSON.stringify(payload);
+  const headerPayload = req.headers;
+  console.log({ headerPayload }, "headerPayload");
+  console.log({ payload }, "payload");
+  const svixId = headerPayload["svix-id"] as string;
+  const svixIdTimeStamp = headerPayload["svix-timestamp"] as string;
+  const svixSignature = headerPayload["svix-signature"] as string;
+  if (!svixId || !svixIdTimeStamp || !svixSignature) {
+    console.log("svixId", svixId);
+    console.log("svixIdTimeStamp", svixIdTimeStamp);
+    console.log("svixSignature", svixSignature);
+    return res.status(500).json({ message: "Error Happended" });
+  }
+  const svixHeaders = {
+    "svix-id": svixId,
+    "svix-timestamp": svixIdTimeStamp,
+    "svix-signature": svixSignature,
+  };
+  const wh = new Webhook(webhookSecret);
+  let evt: Event | null = null;
+  try {
+    evt = wh.verify(payloadString, svixHeaders) as Event;
+  } catch (_) {
+    console.log("error");
+    return new Response("Error occured", {
+      status: 400,
+    });
+  }
+  const caller = appRouter.createCaller({
+    prisma: prisma,
+    cronJobServer: cronJobServer,
+    clerkId: "",
+  });
+
+  const { id } = evt.data;
+  // Handle the webhook
+  const eventType: EventType = evt.type;
+  if (eventType === "user.created" || eventType === "user.updated") {
+    const { email_addresses, primary_email_address_id } = evt.data;
+    const emailObject = email_addresses?.find((email) => {
+      return email.id === primary_email_address_id;
+    });
+    if (!emailObject) {
+      return res.status(500).json({ message: "no email found" });
+    }
+    console.log("ding something");
+    const user = await caller.user.createUser({
+      clerkId: id,
+    });
+  }
+  console.log(`User ${id} was ${eventType}`);
+  return res.status(200).json({ message: "ok" });
+}
+
 type Event = {
-  data: Record<string, string | number>;
+  data: UserInterface;
   object: "event";
   type: EventType;
 };
 
-type EventType = "user.created" | "user.updated" | "*";
+type EventType = "user.created";

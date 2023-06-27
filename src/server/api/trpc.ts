@@ -15,14 +15,8 @@
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
 
 import { prisma } from "~/server/db";
-
-type CreateContextOptions = {
-  session: Session | null;
-};
-
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
  * it from here.
@@ -33,15 +27,16 @@ type CreateContextOptions = {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (opts?: CreateContextOptions) => {
+const createInnerTRPCContext = (opts: CreateNextContextOptions) => {
+  const { req } = opts;
+  const sesh = getAuth(req);
+  const clerkId = sesh.userId;
   return {
     prisma,
-    twitterClient: (token_or_authOptions: string | AuthClient) =>
-      new Client(token_or_authOptions),
-    cronJobServer: axios.create({
-      baseURL: "https://aperturs-cron-jobs.onrender.com/",
-      timeout: 1000,
-    }),
+    // twitterClient: (token_or_authOptions: string | AuthClient) =>
+    //   new Client(token_or_authOptions),
+    cronJobServer: cronJobServer,
+    clerkId,
   };
 };
 
@@ -57,7 +52,10 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   // Get the session from the server using the getServerSession wrapper function
   // const session = await getServerAuthSession({ req, res });
 
-  return createInnerTRPCContext();
+  return createInnerTRPCContext({
+    req,
+    res,
+  });
 };
 
 /**
@@ -73,6 +71,8 @@ import { ZodError } from "zod";
 import { Client, auth } from "twitter-api-sdk";
 import axios from "axios";
 import { AuthClient } from "twitter-api-sdk/dist/types";
+import cronJobServer from "../cronjob";
+import { getAuth } from "@clerk/nextjs/dist/server";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
