@@ -33,17 +33,22 @@ type CreateContextOptions = {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (opts?: CreateContextOptions) => {
-  return {
-    prisma,
-    twitterClient: (token_or_authOptions: string | AuthClient) =>
-      new Client(token_or_authOptions),
-    cronJobServer: axios.create({
-      baseURL: "https://aperturs-cron-jobs.onrender.com/",
-      timeout: 1000,
-    }),
-  };
-};
+
+
+// use this if we have to again start with cron jobs
+// const createInnerTRPCContext = (opts: CreateContextOptions,) => {
+
+//     return {
+//     prisma,
+//     twitterClient: (token_or_authOptions: string | AuthClient) =>
+//       new Client(token_or_authOptions),
+//     cronJobServer: axios.create({
+//       baseURL: "https://aperturs-cron-jobs.onrender.com/",
+//       timeout: 1000,
+//     }),
+
+//   };
+// };
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -53,11 +58,15 @@ const createInnerTRPCContext = (opts?: CreateContextOptions) => {
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
-
+  const session = getAuth(req);
+  const user = session.user
   // Get the session from the server using the getServerSession wrapper function
   // const session = await getServerAuthSession({ req, res });
 
-  return createInnerTRPCContext();
+  return{
+    prisma,
+    currentUser:user
+  }
 };
 
 /**
@@ -73,6 +82,7 @@ import { ZodError } from "zod";
 import { Client, auth } from "twitter-api-sdk";
 import axios from "axios";
 import { AuthClient } from "twitter-api-sdk/dist/types";
+import { getAuth } from "@clerk/nextjs/server";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
@@ -111,18 +121,20 @@ export const createTRPCRouter = t.router;
  */
 export const publicProcedure = t.procedure;
 
-/** Reusable middleware that enforces users are logged in before running the procedure. */
-// const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-//   if (!ctx.session || !ctx.session.user) {
-//     throw new TRPCError({ code: "UNAUTHORIZED" });
-//   }
-//   return next({
-//     ctx: {
-//       // infers the `session` as non-nullable
 
-//     },
-//   });
-// });
+/** Reusable middleware that enforces users are logged in before running the procedure. */
+const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+  if (!ctx.currentUser) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      currentUser: ctx.currentUser,
+    },
+  });
+});
+
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 
 /**
  * Protected (authenticated) procedure
