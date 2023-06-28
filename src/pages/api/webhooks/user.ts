@@ -49,6 +49,7 @@ export default async function handler(
     console.log("svixIdTimeStamp", svixIdTimeStamp);
     console.log("svixSignature", svixSignature);
     return res.status(500).json({ message: "Error Happended" });
+
   }
   const svixHeaders = {
     "svix-id": svixId,
@@ -71,6 +72,7 @@ export default async function handler(
     clerkId: "",
   });
 
+
   const { id } = evt.data;
   // Handle the webhook
   const eventType: EventType = evt.type;
@@ -86,6 +88,7 @@ export default async function handler(
     }
     const user = await caller.user.createUser({
       clerkId: id,
+
     });
   }
   return res.status(200).json({ message: "ok" });
