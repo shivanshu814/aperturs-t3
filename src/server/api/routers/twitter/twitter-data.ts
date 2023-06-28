@@ -14,7 +14,7 @@ export const twitterOrgAuth = createTRPCRouter({
         data: {
             client_id: input.clientId,
             client_secret:input.clientSecret,
-            clerkUserId: ctx.currentUser.id
+            clerkUserId: ctx.currentUser
         },
       });
       return user;
